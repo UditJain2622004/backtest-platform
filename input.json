@@ -1,8 +1,8 @@
 {
     "tickers":["clv","auction"],
     "start_date":"2024-01-01",
-    "end_date":"2025-01-01",
-    "interval":"1d",
+    "end_date":"2025-01-02",
+    "interval":"1h",
     "indicators":["sma_20","rsi","candle_return"],
     "entry_conditions":[[{
         "lhs":"sma_20",

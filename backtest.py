@@ -1,6 +1,6 @@
 from datetime import datetime
 
-def execute_trade(entry_price, exit_price,close_time):
+def execute_trade(entry_price, exit_price,entry_time,exit_time):
     """Execute a trade and calculate the results"""
     profit_percentage = ((exit_price - entry_price) / entry_price) * 100
     return {
@@ -9,7 +9,9 @@ def execute_trade(entry_price, exit_price,close_time):
         # 'stop_loss': stop_loss,
         # 'take_profit': take_profit,
         'profit_percentage': profit_percentage,
-        'timestamp': close_time
+
+        'entry_time': entry_time,
+        'exit_time': exit_time
     }
 
     
@@ -24,7 +26,8 @@ def backtest_strategy(coin_object, current_data, strategy, verbose=False):
             trade_result = execute_trade(
                 entry_price=coin_object.entry_price,
                 exit_price=current_price,
-                close_time= close_time
+                entry_time=coin_object.entry_time,
+                exit_time= close_time
                 # stop_loss=coin_object.stop_loss,
                 # take_profit=coin_object.take_profit
             )

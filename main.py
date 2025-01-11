@@ -6,6 +6,8 @@ import time
 from datetime import datetime
 import json
 from strategy import Strategy
+from report_generator import ReportGenerator
+
 
 class Coin:
     usdt_balance = 1
@@ -151,6 +153,11 @@ if total_trades > 0:
     print(f"Win Rate: {win_rate:.2%}\n")
     print(f"Best Trade: {best_trade:.2f}%\n")
     print(f"Final Balance: {Coin.usdt_balance:.2f} USDT\n")
+
+
+    # Generate report
+    report_generator = ReportGenerator(Coin.all_trades, initial_balance=1)
+    report_generator.save_report(f"reports/backtest_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
 
 
     log_filename = f"logs/V16StopLossCLV.txt"
