@@ -9,7 +9,6 @@ class ReportGenerator:
         self.initial_balance = initial_balance
         
     def calculate_basic_metrics(self):
-        """Calculate basic trading metrics"""
         metrics = {}
         
         try:
@@ -33,7 +32,7 @@ class ReportGenerator:
                 "win_rate": round(len(winning_trades) / len(self.trades)*100, 2) if self.trades else 0,
             })
 
-            # Add metrics that might fail independently
+            # handle  metrics that might fail 
             try:
                 metrics["average_profit"] = round(np.mean([t.get('profit_percentage', 0) for t in self.trades]), 2)
             except Exception as e:
@@ -71,7 +70,6 @@ class ReportGenerator:
     
         
     def calculate_time_based_metrics(self):
-        """Calculate time-based metrics"""
         try:
             df = pd.DataFrame(self.trades)
             df['exit_time'] = pd.to_datetime(df['exit_time'], errors='coerce')
@@ -120,7 +118,6 @@ class ReportGenerator:
             }
         
     def analyze_trade_patterns(self):
-        """Analyze detailed patterns in trades"""
         if not self.trades:
             return {"trade_details": [], "pattern_metrics": {}}
             
@@ -161,7 +158,6 @@ class ReportGenerator:
         }
         
     def classify_profit_size(self, profit_pct):
-        """Classify the size of the profit/loss"""
         if profit_pct > 20:
             return "large_win"
         elif profit_pct > 10:
@@ -176,7 +172,6 @@ class ReportGenerator:
             return "large_loss"
             
     def calculate_trade_duration(self, trade):
-        """Calculate how long the trade was held"""
         try:
             entry_time = pd.to_datetime(trade['entry_time'])
             exit_time = pd.to_datetime(trade['exit_time'])
@@ -188,8 +183,8 @@ class ReportGenerator:
             hours = duration.seconds // 3600
             minutes = (duration.seconds % 3600) // 60
             # print(duration,days,hours,minutes)
-            # Format duration string
-            duration_parts = []
+
+            duration_parts = ""
             if days > 0:
                 duration_parts.append(f"{days}d")
             if hours > 0:
@@ -197,17 +192,15 @@ class ReportGenerator:
             if minutes > 0:
                 duration_parts.append(f"{minutes}m")
             
-            return " ".join(duration_parts) if duration_parts else "0m"
+            return duration_parts if len(duration_parts)>0 else "0m"
             
         except (ValueError, KeyError):
             return "unknown"
         
     def calculate_pattern_metrics(self, trade_details):
-        """Calculate metrics useful for pattern recognition"""
         if not trade_details:
             return {}
             
-        # Convert to DataFrame for easier analysis
         df = pd.DataFrame(trade_details)
         
         return {
@@ -224,7 +217,6 @@ class ReportGenerator:
         
         
     def generate_full_report(self):
-        """Generate comprehensive trading report"""
         report = {
             "basic_metrics": self.calculate_basic_metrics(),
             "time_metrics": self.calculate_time_based_metrics(),
@@ -235,7 +227,6 @@ class ReportGenerator:
         return report
         
     def save_report(self, filename):
-        """Save report to JSON file"""
         try:
             report = self.generate_full_report()
             with open(filename, 'w') as f:
@@ -243,7 +234,6 @@ class ReportGenerator:
             print(f"Report successfully saved to {filename}")
         except Exception as e:
             print(f"Error saving report: {e}")
-            # Save partial report if possible
             try:
                 partial_report = {
                     "error": str(e),

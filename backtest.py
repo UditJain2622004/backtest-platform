@@ -17,8 +17,8 @@ def execute_trade(entry_price, exit_price,entry_time,exit_time):
     
 
 def backtest_strategy(coin_object, current_data, strategy, verbose=False):
-    current_price = current_data['Close']
-    close_time = current_data['Close time']
+    current_price = current_data['close']
+    close_time = current_data['close time']
     
     # Check exit conditions if in position
     if coin_object.position and coin_object.curr_coin == coin_object.name:
@@ -33,7 +33,7 @@ def backtest_strategy(coin_object, current_data, strategy, verbose=False):
             )
             print(current_data['sma_20'], trade_result['profit_percentage'])
             coin_object.exit_trade(trade_result, trade_result['profit_percentage'])
-            strategy.reset_risk_manager()  # Reset for next trade
+            strategy.reset_risk_manager()
             
     # Check entry conditions if not in position
     if not coin_object.position:

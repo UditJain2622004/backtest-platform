@@ -4,6 +4,14 @@
     "end_date":"2025-01-02",
     "interval":"1h",
     "indicators":["sma_20","rsi","candle_return"],
+    "custom_indicators": [ 
+        {
+            "name": "price_spread",
+            "op1": "high",
+            "oper": "-",
+            "op2": "low"
+        }
+    ],
     "entry_conditions":[[{
         "lhs":"sma_20",
         "operator":">",
@@ -21,6 +29,14 @@
         "indicator":"string" ,
         "value":5,
         "sign":"%"
+    }
+}],
+[{
+    "lhs": "price_spread",
+    "operator": ">",
+    "rhs": {
+        "type": "number_input",
+        "value": 100
     }
 }]],
 

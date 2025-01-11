@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+
 from utils import fetch_price_history_by_interval, transform_data, add_technical_indicators
 from backtest import backtest_strategy
 import time
@@ -27,7 +28,7 @@ class Coin:
         self.entry_time = entry_time
         
         # Performance tracking
-        self.trade_history = []  # Keeps last N trades
+        self.trade_history = []
         
 
         
@@ -66,7 +67,6 @@ class Coin:
 coins = ["clv"]
 
 
-# Load strategy configuration
 with open('input.json', 'r') as f:
     config = json.load(f)
 
@@ -74,7 +74,6 @@ with open('input.json', 'r') as f:
 start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
 end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")
 
-# Get the timestamp
 start_time = int(start_date_object.timestamp())*1000
 end_time = int(end_date_object.timestamp())*1000
 
@@ -100,12 +99,12 @@ for coin in coins:
         #save to file
         df.to_csv(f'./data/{PAIR}.csv', index=False)
 
-    df = add_technical_indicators(df, config['indicators'])
+    
     coin_objects.append(Coin(coin, PAIR, df))
 
 
 
-
+df = add_technical_indicators(df, config['custom_indicators'])
 
 
 # Create strategy
@@ -162,7 +161,6 @@ if total_trades > 0:
 
     log_filename = f"logs/V16StopLossCLV.txt"
     with open(log_filename, 'a') as log_file:
-    # Calculate final results
 
         
         # Log final results
@@ -172,6 +170,9 @@ if total_trades > 0:
         log_file.write(f"Win Rate: {win_rate:.2%}\n")
         log_file.write(f"Best Trade: {best_trade:.2f}%\n")
         log_file.write(f"Final Balance: {Coin.usdt_balance:.2f} USDT\n")
+
+
+        
 
 
         

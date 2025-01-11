@@ -1,4 +1,4 @@
-Open time,Open,High,Low,Close,Volume,Close time,Quote asset volume,Number of trades,Taker buy base asset volume,Taker buy quote asset volume,Ignore
+open time,open,high,low,close,volume,close time,quote asset volume,number of trades,taker buy base asset volume,taker buy quote asset volume,ignore
 2023-12-31 19:00:00,0.05919,0.05955,0.05899,0.05908,984683.1,2023-12-31 19:59:59.999,58338.901599,396,485106.8,28742.762855,0
 2023-12-31 20:00:00,0.059,0.05929,0.05871,0.05898,1751326.3,2023-12-31 20:59:59.999,103300.943918,401,1008595.1,59485.685074,0
 2023-12-31 21:00:00,0.0589,0.05928,0.0587,0.05879,1731833.6,2023-12-31 21:59:59.999,101999.119914,443,791976.4,46680.763266,0

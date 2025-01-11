@@ -3,14 +3,12 @@ import requests
 import time
 
 def calculate_sma(data, period):
-    """Calculate Simple Moving Average"""
     return data.rolling(window=period).mean()
 
 def calculate_tr(data):
-    """Calculate True Range"""
-    high = data['High']
-    low = data['Low']
-    close = data['Close'].shift(1)
+    high = data['high']
+    low = data['low']
+    close = data['close'].shift(1)
     
     tr1 = high - low
     tr2 = abs(high - close)
@@ -20,12 +18,10 @@ def calculate_tr(data):
     return tr
 
 def calculate_atr(data, period=14):
-    """Calculate Average True Range"""
     tr = calculate_tr(data)
     return tr.rolling(window=period).mean()
 
 def calculate_rsi(data, period=14):
-    """Calculate Relative Strength Index"""
     delta = data.diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
@@ -33,7 +29,6 @@ def calculate_rsi(data, period=14):
     return 100 - (100 / (1 + rs))
 
 def calculate_macd(data, fast=12, slow=26, signal=9):
-    """Calculate MACD and Signal Line"""
     exp1 = data.ewm(span=fast, adjust=False).mean()
     exp2 = data.ewm(span=slow, adjust=False).mean()
     macd = exp1 - exp2
@@ -41,86 +36,33 @@ def calculate_macd(data, fast=12, slow=26, signal=9):
     return macd, signal_line
 
 def calculate_roc(data, period=10):
-    """Calculate Rate of Change"""
     return ((data - data.shift(period)) / data.shift(period)) * 100
 
 def calculate_candle_return(data):
-    """Calculate single candle return percentage"""
-    return (data['Close'] - data['Open']) / data['Open'] * 100
+    return (data['close'] - data['open']) / data['open'] * 100
 
-def add_technical_indicators(df, indicators):
-    """
-    Add specified technical indicators to dataframe
-    
-    Parameters:
-    df: pandas DataFrame with OHLCV data
-    indicators: list of indicator names to calculate
-    
-    Returns:
-    df: DataFrame with added indicators
-    """
-    indicator_functions = {
-        'sma_20': lambda x: calculate_sma(x['Close'], 20),
-        'sma_50': lambda x: calculate_sma(x['Close'], 50),
-        'sma_200': lambda x: calculate_sma(x['Close'], 200),
-        'volume_sma_5': lambda x: calculate_sma(x['Volume'], 5),
-        'volume_ma_20': lambda x: calculate_sma(x['Volume'], 20),
-        'volume_sma_50': lambda x: calculate_sma(x['Volume'], 50),
-        'tr': calculate_tr,
-        'atr': lambda x: calculate_atr(x, 14),
-        'rsi': lambda x: calculate_rsi(x['Close'], 14),
-        'candle_return': calculate_candle_return
-    }
-    
-    # Special handling for MACD since it returns multiple values
-    if 'macd' in indicators or 'signal' in indicators:
-        macd_line, signal_line = calculate_macd(df['Close'])
-        df['macd'] = macd_line
-        df['signal'] = signal_line
-        
-        # Remove from indicators list since already handled
-        indicators = [i for i in indicators if i not in ['macd', 'signal']]
-    
-    # Calculate other indicators
-    for indicator in indicators:
-        if indicator in indicator_functions:
-            df[indicator] = indicator_functions[indicator](df)
-    
-    return df
 
-# Update the existing calculate_technical_indicators function
-def calculate_technical_indicators(df):
-    """Calculate all available technical indicators"""
-    all_indicators = [
-        'sma_20', 'sma_50', 'sma_200',
-        'volume_sma_5', 'volume_ma_20', 'volume_sma_50',
-        'tr', 'atr', 'rsi', 'macd', 'signal',
-        'roc', 'candle_return'
-    ]
-    
-    return add_technical_indicators(df, all_indicators) 
 
 
 def transform_data(prices, PAIR):
     print(f"Retrieved {len(prices)} candles.")
     
-    # Convert to DataFrame for easier processing
     df = pd.DataFrame(prices, columns=[
-        "Open time", "Open", "High", "Low", "Close", "Volume",
-        "Close time", "Quote asset volume", "Number of trades",
-        "Taker buy base asset volume", "Taker buy quote asset volume", "Ignore"
+        "open time", "open", "high", "low", "close", "volume",
+        "close time", "quote asset volume", "number of trades",
+        "taker buy base asset volume", "taker buy quote asset volume", "ignore"
     ])
     
     # Convert numeric columns
-    numeric_columns = ["Open", "High", "Low", "Close", "Volume", 
-                      "Quote asset volume", "Number of trades",
-                      "Taker buy base asset volume", "Taker buy quote asset volume"]
+    numeric_columns = ["open", "high", "low", "close", "volume", 
+                      "quote asset volume", "number of trades",
+                      "taker buy base asset volume", "taker buy quote asset volume"]
     for col in numeric_columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     
     # Convert timestamps
-    df["Open time"] = pd.to_datetime(df["Open time"], unit="ms")
-    df["Close time"] = pd.to_datetime(df["Close time"], unit="ms")
+    df["open time"] = pd.to_datetime(df["open time"], unit="ms")
+    df["close time"] = pd.to_datetime(df["close time"], unit="ms")
     
 
     
@@ -149,7 +91,7 @@ def fetch_price_history_by_interval(symbol, interval, start_time, end_time=None)
             "symbol": symbol,
             "interval": interval,
             "startTime": start_time,
-            "limit": 1000,  # Maximum per request
+            "limit": 1000,
         }
         if end_time:
             params["endTime"] = end_time
@@ -159,15 +101,114 @@ def fetch_price_history_by_interval(symbol, interval, start_time, end_time=None)
         data = response.json()
         
         if not data:
-            break  # No more data to fetch
+            break  
         
         all_klines.extend(data)
-        start_time = data[-1][6] + 1  # Start time for next request
+        start_time = data[-1][6] + 1  
 
         # Break if we've reached the end_time
         if end_time and start_time >= end_time:
             break
 
-        time.sleep(0.1)  # Prevent hitting rate limits
+        time.sleep(0.1)
 
     return all_klines
+
+
+
+def add_technical_indicators(df, custom_indicators=None):
+
+    calculator = IndicatorCalculator()
+    return calculator.add_indicators(df, custom_indicators)
+
+
+# def calculate_technical_indicators(df):
+#     all_indicators = [
+#         'sma_20', 'sma_50', 'sma_200',
+#         'volume_sma_5', 'volume_ma_20', 'volume_sma_50',
+#         'tr', 'atr', 'rsi', 'macd', 'signal',
+#         'roc', 'candle_return'
+#     ]
+    
+#     return add_technical_indicators(df, all_indicators) 
+
+class IndicatorCalculator:
+    def __init__(self):
+        self.base_indicators = {
+            'sma_20': lambda x: calculate_sma(x['close'], 20),
+            'sma_50': lambda x: calculate_sma(x['close'], 50),
+            'sma_200': lambda x: calculate_sma(x['close'], 200),
+            'volume_sma_5': lambda x: calculate_sma(x['volume'], 5),
+            'volume_ma_20': lambda x: calculate_sma(x['volume'], 20),
+            'volume_sma_50': lambda x: calculate_sma(x['volume'], 50),
+            'tr': calculate_tr,
+            'atr': lambda x: calculate_atr(x, 14),
+            'rsi': lambda x: calculate_rsi(x['close'], 14),
+            'candle_return': calculate_candle_return
+        }
+        
+        self.available_columns = [
+            'open', 'high', 'low', 'close', 'volume',
+            *self.base_indicators.keys()
+        ]
+        
+    def calculate_custom_indicator(self, df, indicator_def):
+        """
+        {
+            "name": "indicator_name",
+            "op1": "metric1",
+            "oper": "+|-|*|/",
+            "op2": "metric2"
+        }
+        """
+        try:
+            # Validate operands
+            if indicator_def['op1'] not in self.available_columns:
+                raise ValueError(f"Invalid operand 1: {indicator_def['op1']}. Must be one of {self.available_columns}")
+            if indicator_def['op2'] not in self.available_columns:
+                raise ValueError(f"Invalid operand 2: {indicator_def['op2']}. Must be one of {self.available_columns}")
+                
+            op1_values = df[indicator_def['op1']]
+            op2_values = df[indicator_def['op2']]
+            
+            if indicator_def['oper'] == '+':
+                result = op1_values + op2_values
+            elif indicator_def['oper'] == '-':
+                result = op1_values - op2_values
+            elif indicator_def['oper'] == '*':
+                result = op1_values * op2_values
+            elif indicator_def['oper'] == '/':
+                result = op1_values / op2_values
+            else:
+                raise ValueError(f"Invalid operator: {indicator_def['oper']}. Must be one of +,-,*,/")
+                
+            return result
+            
+        except Exception as e:
+            print(f"Error calculating custom indicator {indicator_def['name']}: {e}")
+            return None
+
+    def add_indicators(self, df, custom_indicators=None):
+        """Add both built-in and custom indicators to dataframe"""
+        # First calculate all built-in indicators
+        for name, func in self.base_indicators.items():
+            try:
+                df[name] = func(df)
+            except Exception as e:
+                print(f"Error calculating built-in indicator {name}: {e}")
+                df[name] = None
+                
+        # Then calculate custom indicators if any
+        if custom_indicators:
+            for indicator in custom_indicators:
+                try:
+                    # print(indicator)
+                    result = self.calculate_custom_indicator(df, indicator)
+                    # print(result)
+                    if result is not None:
+                        df[indicator['name']] = result
+                        self.available_columns.append(indicator['name'])
+                except Exception as e:
+                    print(f"Error adding custom indicator {indicator['name']}: {e}")
+                    
+        return df
