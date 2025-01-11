@@ -1,27 +1,26 @@
-from flask import Flask, send_file, request, render_template_string, jsonify
+from flask import Flask, send_file, request, render_template_string
 from flask_cors import CORS
-from auth.routes import auth, token_required
-from reports.builder import ReportManager, ReportBuilder
+from auth.routes import auth
 from routes.backtest_routes import backtest_routes, init_routes
-from auth.models import Database
+from reports.builder import ReportManager, ReportBuilder
 import os
 from datetime import datetime
+from auth.models import Database
+
 
 app = Flask(__name__)
 CORS(app)
 
-# Initialize database
 db = Database()
-
-# Initialize routes with database
 init_routes(db)
-
 # Register blueprints
+# backtest_routes = init_routes(db)
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(backtest_routes, url_prefix='/api')
 
 @app.route('/')
 def index():
+    """Show list of available reports"""
     reports_dir = ReportBuilder.get_reports_dir()  # Use the shared method
     reports = []
     
@@ -112,11 +111,5 @@ def get_report(report_id):
     
     return f"Report not found at: {report_path}", 404
 
-# User profile route
-@app.route('/get_profile', methods=['GET'])
-@token_required
-def get_profile(current_user):
-    return jsonify(current_user), 200
-
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)

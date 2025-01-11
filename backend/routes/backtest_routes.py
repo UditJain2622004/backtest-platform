@@ -1,5 +1,8 @@
+import uuid
 from flask import Blueprint, request, jsonify
 from auth.routes import token_required
+from agenticAI.insights import generate_insights
+# from reports.builder import save_report
 from models.backtest import BacktestModel
 from backtest.utils import add_technical_indicators, transform_data, fetch_price_history_by_interval
 from backtest.backtest import backtest_strategy
@@ -9,6 +12,7 @@ from backtest.strategy import Strategy
 from backtest.main import Coin
 import pandas as pd
 import os
+import json
 
 backtest_routes = Blueprint('backtest_routes', __name__)
 backtest_model = None
@@ -66,18 +70,33 @@ def init_routes(db):
 
             # Generate report
             if len(Coin.all_trades) > 0:
+                print("Helloooooooo")
                 report_generator = ReportGenerator(Coin.all_trades, initial_balance=1)
                 report_filename = f"backtest_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
                 report_path = f"reports/{report_filename}"
-                report_generator.save_report(report_path)
+                print("Helloooooooo")
+                report = report_generator.generate_full_report()
+                # save report to file
+                with open("test.json", 'w') as f:
+                    json.dump(report, f)
+                insights = generate_insights(report)
+                print("Helloooooooo")
+
+                # generate random id
+                report_id = str(uuid.uuid4())
+                # report_generator.save_report("reports",report_id,report,insights)
+                print("Helloooooooo")
+
+                # report_id = save_report(report_path,report_filename)
 
                 # Store in MongoDB
                 backtest_id = backtest_model.create_backtest(
                     user_id="123",
                     # user_id=current_user['_id'],
                     input_params=config,
-                    results=report_generator.generate_full_report(),
-                    report_id=report_filename
+                    results=report,
+                    report_id=report_filename,
+                    insights=insights['insights']
                 )
 
                 return jsonify({
@@ -97,7 +116,7 @@ def init_routes(db):
                 "message": str(e)
             }), 500
 
-    @backtest_routes.route('/get_result/<backtest_id>', methods=['GET'])
+    @backtest_routes.route('/backtest/<backtest_id>', methods=['GET'])
     @token_required
     def get_backtest_result(current_user, backtest_id):
         try:
@@ -109,11 +128,11 @@ def init_routes(db):
                 }), 404
 
             # Check if user owns this backtest
-            if result['user_id'] != current_user['_id']:
-                return jsonify({
-                    "status": "error",
-                    "message": "Unauthorized"
-                }), 403
+            # if result['user_id'] != current_user['_id']:
+            #     return jsonify({
+            #         "status": "error",
+            #         "message": "Unauthorized"
+            #     }), 403
 
             return jsonify({
                 "status": "success",

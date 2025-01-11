@@ -130,12 +130,12 @@ class ReportGenerator:
                 running_balance *= (1 + profit_pct/100)
                 
                 trade_info = {
-                    "entry_price": round(trade.get('entry_price', 0), 4),
-                    "exit_price": round(trade.get('exit_price', 0), 4),
+                    # "entry_price": round(trade.get('entry_price', 0), 4),
+                    # "exit_price": round(trade.get('exit_price', 0), 4),
                     "profit_percentage": round(profit_pct, 2),
-                    "entry_time": trade.get('entry_time'),
-                    "exit_time": trade.get('exit_time'),
-                    "trade_type": "win" if profit_pct > 0 else "loss",
+                    # "entry_time": trade.get('entry_time'),
+                    # "exit_time": trade.get('exit_time'),
+                    # "trade_type": "win" if profit_pct > 0 else "loss",
                     "profit_size": self.classify_profit_size(profit_pct),
                 }
 
@@ -202,7 +202,8 @@ class ReportGenerator:
             return {}
             
         df = pd.DataFrame(trade_details)
-        
+        print("eeeeeeeeeeeee")
+        print("eeeeeeeeeeeee")
         return {
             "profit_distribution": {
                 "large_wins": len(df[df['profit_size'] == 'large_win']),
@@ -221,7 +222,7 @@ class ReportGenerator:
             "basic_metrics": self.calculate_basic_metrics(),
             "time_metrics": self.calculate_time_based_metrics(),
             "trade_analysis": self.analyze_trade_patterns(),
-            "report_generated": datetime.now().strftime("%Y-%m-%d %h:%M:%S")
+            # "report_generated": datetime.now().strftime("%Y-%m-%d %h:%M:%S")
         }
         
         return report

@@ -151,8 +151,11 @@ def get_and_save_insights(data):
         }
 
         # Use ReportBuilder to save the report
+        print("Saving Report")
         report_builder = ReportBuilder(report_data)
         report_id = report_builder.save_report()
+        print(report_id)
+        print("Report Saved")
         
         return {
             "report_id": report_id,
@@ -167,6 +170,16 @@ def get_and_save_insights(data):
 async def async_generate_insights(data):
     """Wrap the main function with asyncio for parallel execution"""
     return await asyncio.to_thread(get_and_save_insights, data)
+
+
+def generate_insights(data):
+    try:
+        result = asyncio.run(async_generate_insights(data))
+        return result
+    except Exception as e:
+        logging.error(f"Error generating insights: {str(e)}")
+        logging.exception(e)
+        return None
 
 if __name__ == "__main__":
     # Load the dummy.json file

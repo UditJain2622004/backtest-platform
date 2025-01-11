@@ -5,13 +5,14 @@ class BacktestModel:
     def __init__(self, db):
         self.collection = db.backtests
 
-    def create_backtest(self, user_id, input_params, results, report_id):
+    def create_backtest(self, user_id, input_params, results, report_id, insights):
         """Store backtest results in MongoDB"""
         backtest = {
             "user_id": user_id,
             "input_params": input_params,
             "results": results,
             "report_id": report_id,
+            "insights": insights,
             "created_at": datetime.utcnow(),
             "status": "completed"
         }
