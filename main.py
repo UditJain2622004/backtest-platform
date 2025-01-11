@@ -64,12 +64,12 @@ class Coin:
 
     
 
-coins = ["clv"]
 
 
 with open('input.json', 'r') as f:
     config = json.load(f)
 
+coins = [config["ticker"]]
 
 start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
 end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")

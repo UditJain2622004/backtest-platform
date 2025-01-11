@@ -185,12 +185,12 @@ class ReportGenerator:
             # print(duration,days,hours,minutes)
 
             duration_parts = ""
-            if days > 0:
-                duration_parts.append(f"{days}d")
+            if days > 0:    
+                duration_parts += f"{days}d"
             if hours > 0:
-                duration_parts.append(f"{hours}h")
+                duration_parts += f"{hours}h"
             if minutes > 0:
-                duration_parts.append(f"{minutes}m")
+                duration_parts += f"{minutes}m"
             
             return duration_parts if len(duration_parts)>0 else "0m"
             

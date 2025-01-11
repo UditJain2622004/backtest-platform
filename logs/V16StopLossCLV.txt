@@ -136,3 +136,15 @@ Average Profit: -1.25%
 Win Rate: 28.36%
 Best Trade: 27.57%
 Final Balance: 0.37 USDT
+Final Results:
+Total Trades: 67
+Average Profit: -1.25%
+Win Rate: 28.36%
+Best Trade: 27.57%
+Final Balance: 0.37 USDT
+Final Results:
+Total Trades: 67
+Average Profit: -1.25%
+Win Rate: 28.36%
+Best Trade: 27.57%
+Final Balance: 0.37 USDT
