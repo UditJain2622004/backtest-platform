@@ -4,7 +4,7 @@
     "end_date":"2025-01-02",
     "interval":"1h",
     "indicators":["sma_20","rsi","candle_return"],
-    "custom_indicators": [ 
+    "custom_indicators": [
         {
             "name": "price_spread",
             "op1": "high",
