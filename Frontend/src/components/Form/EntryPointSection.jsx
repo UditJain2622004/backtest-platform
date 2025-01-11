@@ -8,9 +8,8 @@ import { constants } from './constants';
 
 const { indicators, comparisonOperators, arithmeticOperators } = constants;
 
-export function EntryPointSection({ data, onChange }) {
+export function EntryPointSection({ data, onChange, customIndicators, onCustomIndicatorChange }) {
   const [showCustomIndicator, setShowCustomIndicator] = useState(false);
-  const [customIndicators, setCustomIndicators] = useState([]);
   const [customIndicator, setCustomIndicator] = useState({
     name: '',
     firstIndicator: '',
@@ -115,20 +114,24 @@ export function EntryPointSection({ data, onChange }) {
   );
 
   const handleCreateIndicator = () => {
+    //console.log(customIndicator);
+    
     if (!customIndicator.name || !customIndicator.firstIndicator || !customIndicator.secondIndicator) {
       return;
     }
 
     const newCustomIndicator = {
-      id: `custom_${Date.now()}`,
+      id: customIndicator.name,
       name: customIndicator.name,
       formula: `${customIndicator.firstIndicator} ${customIndicator.operator} ${customIndicator.secondIndicator}`,
       firstIndicator: customIndicator.firstIndicator,
       operator: customIndicator.operator,
       secondIndicator: customIndicator.secondIndicator
     };
+    console.log(newCustomIndicator);
 
-    setCustomIndicators(prev => [...prev, newCustomIndicator]);
+    onCustomIndicatorChange([...customIndicators, newCustomIndicator]);
+    
     setCustomIndicator({
       name: '',
       firstIndicator: '',
@@ -184,6 +187,16 @@ export function EntryPointSection({ data, onChange }) {
         </p>
       </div>
     );
+  };
+
+  const handleAddCustomIndicator = (indicator) => {
+    console.log(indicator);
+    onCustomIndicatorChange([...customIndicators, {
+      name: indicator.name,
+      op1: indicator.firstIndicator || 'high',
+      op2: indicator.secondIndicator || 'low',
+      oper: indicator.operator || '-'
+    }]);
   };
 
   return (
@@ -375,6 +388,8 @@ export function EntryPointSection({ data, onChange }) {
             customIndicators={customIndicators}
           />
         )}
+
+        
       </div>
     </div>
   );

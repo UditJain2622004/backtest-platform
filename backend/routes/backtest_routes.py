@@ -26,41 +26,48 @@ def init_routes(db):
     def run_backtest():
         try:
             config = request.get_json()
-            print("Hello")
-
+            print(config)
+            print("Hellooooo")
             coins = [config["ticker"]]
+            print("Hellooooo")
 
             start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
+            print("Hellooooo")
             end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")
+            print("Hellooooo")
 
             start_time = int(start_date_object.timestamp())*1000
             end_time = int(end_date_object.timestamp())*1000
+            print("Hellooooo")
 
             interval = config['interval']
             coin_objects = []
+            print("Hellooooo")
 
             for coin in coins:
                 df = None
-                PAIR = coin.upper()+"USDT"
-                if os.path.exists(f'../data/{PAIR}.csv'):
-                    df = pd.read_csv(f'../data/{PAIR}.csv')
-                    # df = calculate_technical_indicators(df)
-                else:
-                    prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
-                    df = transform_data(prices, PAIR)
+                PAIR = coin.upper()
+                # if os.path.exists(f'../data/{PAIR}.csv'):
+                #     df = pd.read_csv(f'../data/{PAIR}.csv')
+                #     # df = calculate_technical_indicators(df)
+                # else:
+                prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
+                df = transform_data(prices, PAIR)
                     #save to file
                     # df.to_csv(f'../data/{PAIR}.csv', index=False)
 
                 
                 coin_objects.append(Coin(coin, PAIR, df))
 
-
+            print("Hellooooo")
             df = add_technical_indicators(df, config['custom_indicators'])
+            print("Hellooooo")
 
             
             # Run backtest
             strategy = Strategy(config)  # Your strategy initialization
             
+            print("Worldssss")
             # Run the backtest
             for t in range(len(coin_objects[0].df)):
                 for coin in coin_objects:
@@ -68,6 +75,7 @@ def init_routes(db):
                     if len(current_data) > 0:
                         backtest_strategy(coin, current_data, strategy)
 
+            print("Worldssss")
             # Generate report
             if len(Coin.all_trades) > 0:
                 print("Helloooooooo")
@@ -106,9 +114,9 @@ def init_routes(db):
                 }), 200
             else:
                 return jsonify({
-                    "status": "error",
+                    "status": "success",
                     "message": "No trades generated"
-                }), 400
+                }), 200
 
         except Exception as e:
             return jsonify({

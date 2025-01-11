@@ -8,9 +8,8 @@ import { constants } from './constants';
 
 const { indicators, comparisonOperators, arithmeticOperators } = constants;
 
-export function ExitPointSection({ data, onChange }) {
+export function ExitPointSection({ data, onChange, customIndicators, onCustomIndicatorChange }) {
   const [showCustomIndicator, setShowCustomIndicator] = useState(false);
-  const [customIndicators, setCustomIndicators] = useState([]);
   const [customIndicator, setCustomIndicator] = useState({
     name: '',
     firstIndicator: '',
@@ -119,7 +118,7 @@ export function ExitPointSection({ data, onChange }) {
     }
 
     const newCustomIndicator = {
-      id: `custom_${Date.now()}`,
+      id: customIndicator.name,
       name: customIndicator.name,
       formula: `${customIndicator.firstIndicator} ${customIndicator.operator} ${customIndicator.secondIndicator}`,
       firstIndicator: customIndicator.firstIndicator,
@@ -127,7 +126,8 @@ export function ExitPointSection({ data, onChange }) {
       secondIndicator: customIndicator.secondIndicator
     };
 
-    setCustomIndicators(prev => [...prev, newCustomIndicator]);
+    onCustomIndicatorChange([...customIndicators, newCustomIndicator]);
+    
     setCustomIndicator({
       name: '',
       firstIndicator: '',
@@ -135,6 +135,15 @@ export function ExitPointSection({ data, onChange }) {
       secondIndicator: ''
     });
     setShowCustomIndicator(false);
+  };
+
+  const handleAddCustomIndicator = (indicator) => {
+    onCustomIndicatorChange([...customIndicators, {
+      name: indicator.name,
+      op1: indicator.firstIndicator || 'high',
+      op2: indicator.secondIndicator || 'low',
+      oper: indicator.operator || '-'
+    }]);
   };
 
   const generateSummary = (indicator) => {
@@ -365,6 +374,7 @@ export function ExitPointSection({ data, onChange }) {
             customIndicators={customIndicators}
           />
         )}
+
       </div>
     </div>
   );
