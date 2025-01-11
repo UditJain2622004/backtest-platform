@@ -7,7 +7,6 @@ import { StreakMetrics } from '../components/Graph/StreakMetrics';
 import { motion } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Download, TrendingUp, LineChart, Brain, BarChart3, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
-import data from '../data.json';
 
 export function Graph() {
   const { basic_metrics, time_metrics, trade_analysis, streak_metrics } = data;

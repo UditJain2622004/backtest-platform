@@ -127,7 +127,7 @@ def get_and_save_insights(data):
 
         # Prepare data for ReportBuilder
         strategy_data = {
-            "symbol": "CRYPTO",
+            "symbol": data["symbol"],
             "total_trades": basic_metrics["total_trades"],
             "winning_trades": basic_metrics["winning_trades"],
             "losing_trades": basic_metrics["losing_trades"],

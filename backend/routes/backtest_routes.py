@@ -84,6 +84,7 @@ def init_routes(db):
                 report_path = f"reports/{report_filename}"
                 print("Helloooooooo")
                 report = report_generator.generate_full_report()
+                report["symbol"] = config["ticker"]
                 # save report to file
                 with open("test.json", 'w') as f:
                     json.dump(report, f)
