@@ -97,7 +97,7 @@ def process_data():
     try:
         # Parse JSON input
         input_data = request.get_json()
-        print(input_data)
+        # print(input_data)
         # Call the function with the input data
         result = chat_completion(input_data["message"],input_data["backtest_results"])
         

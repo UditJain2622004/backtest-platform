@@ -9,12 +9,16 @@ class Condition:
         lhs_value = self._get_value(self.lhs, data)
         
         if self.rhs['type'] == 'indicator':
-            rhs_value = self._get_value(self.rhs['indicator'], data)
-        else:  # number_input
-            rhs_value = int(self.rhs['value'])
-            # Handle percentage calculations if needed
-            # if self.rhs.get('sign') == '%':
-            #     rhs_value = lhs_value * (1 + rhs_value/100)
+            if 'indicator' in self.rhs:
+                rhs_value = self._get_value(self.rhs['indicator'], data)
+            else:
+                rhs_value = None
+        elif self.rhs['type'] == 'number_input':  # number_input
+            rhs_value = float(self.rhs['value'])
+        
+        # Ensure rhs_value is valid before proceeding with comparisons
+        if rhs_value is None:
+            raise ValueError(f"Invalid RHS value: {self.rhs}")
         
         # Evaluate condition
         if self.operator == '>':
@@ -27,17 +31,34 @@ class Condition:
             return lhs_value >= rhs_value
         elif self.operator == '<=':
             return lhs_value <= rhs_value
-        
+
     def _get_value(self, indicator, data):
+        # Check if indicator is a custom one
+        if indicator == '20-50-ratio':
+            # Compute custom indicator value
+            sma_20 = data['sma_20']  # Assuming sma_20 is available in data
+            sma_50 = data['sma_50']  # Assuming sma_50 is available in data
+            return sma_20 / sma_50  # This is the custom calculation for 20-50 ratio
+        
+        # Otherwise, handle standard indicators
         try:
             if indicator == 'close':
                 return data['close']
             elif indicator == 'volume':
                 return data['volume']
+            elif indicator == 'sma_20':
+                return data['sma_20']
+            elif indicator == 'sma_50':
+                return data['sma_50']
+            elif indicator == 'atr':
+                return data['atr']
+            elif indicator == 'rsi':
+                return data['rsi']
             else:
                 return data[indicator]
         except KeyError:
-            raise KeyError(f"Indicator '{indicator}' not found in data. Available indicators: {list(data.index)}")
+            raise KeyError(f"Indicator '{indicator}' not found in data. Available indicators: {list(data.keys())}")
+
 
 
 class Strategy:

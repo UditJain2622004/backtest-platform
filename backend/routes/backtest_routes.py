@@ -28,18 +28,19 @@ def init_routes(db):
             Coin.reset()
             config = request.get_json()
             print(config)
-            print("Hellooooo")
+            # print(config)
+            # print("Hellooooo")
             coins = [config["ticker"]]
-            print("Hellooooo")
+            # print("Hellooooo")
 
             start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
-            print("Hellooooo")
+            # print("Hellooooo")
             end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")
-            print("Hellooooo")
+            # print("Hellooooo")
 
             start_time = int(start_date_object.timestamp())*1000
             end_time = int(end_date_object.timestamp())*1000
-            print("Hellooooo")
+            # print("Hellooooo")
 
             interval = config['interval']
             coin_objects = []
@@ -62,7 +63,7 @@ def init_routes(db):
 
             print("Hellooooo")
             df = add_technical_indicators(df, config['custom_indicators'])
-            print("Hellooooo")
+            # print("Hellooooo")
 
             
             # Run backtest
@@ -73,7 +74,7 @@ def init_routes(db):
             for t in range(len(coin_objects[0].df)):
                 print(t)
                 for coin in coin_objects:
-                    print(coin.df.iloc[t]["candle_return"])
+                    # print(coin.df.iloc[t]["candle_return"])
                     current_data = coin.df.iloc[t]
                     if len(current_data) > 0:
                         backtest_strategy(coin, current_data, strategy)
@@ -82,11 +83,11 @@ def init_routes(db):
             print("Worldssss")
             # Generate report
             if len(Coin.all_trades) > 0:
-                print("Helloooooooo")
+                # print("Helloooooooo")
                 report_generator = ReportGenerator(Coin.all_trades, initial_balance=1)
                 report_filename = f"backtest_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
                 report_path = f"reports/{report_filename}"
-                print("Helloooooooo")
+                # print("Helloooooooo")
                 report = report_generator.generate_full_report()
                 report["symbol"] = config["ticker"]
                 # save report to file
@@ -94,12 +95,12 @@ def init_routes(db):
                     json.dump(report, f)
                 insightsAndReportID = generate_insights(report)
                 report_id = insightsAndReportID['report_id']
-                print("Helloooooooo")
+                # print("Helloooooooo")
 
                 # generate random id
                 # report_id = str(uuid.uuid4())
                 # report_generator.save_report("reports",report_id,report,insights)
-                print("Helloooooooo")
+                # print("Helloooooooo")
 
                 # report_id = save_report(report_path,report_filename)
 

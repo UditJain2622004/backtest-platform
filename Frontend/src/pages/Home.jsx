@@ -180,6 +180,48 @@ export function Home() {
           </motion.div>
         </div>
 
+        {/* Tutorials & Guides */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="py-24 bg-gray-50"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Tutorials & Guides
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Learn how to create and optimize your trading strategies
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <TutorialCard
+                icon={<BookOpen className="w-6 h-6 text-blue-600" />}
+                title="Build Your First Strategy"
+                description="Learn how to create and backtest your first trading strategy in minutes."
+                link="Read More →"
+                linkTo="/form"
+              />
+              <TutorialCard
+                icon={<ChartBar className="w-6 h-6 text-blue-600" />}
+                title="Understanding Metrics"
+                description="Master the key metrics that determine your strategy's performance."
+                link="Read More →"
+                linkTo="/understanding-metrics"
+              />
+              <TutorialCard
+                icon={<Cog className="w-6 h-6 text-blue-600" />}
+                title="Strategy Optimization"
+                description="Learn advanced techniques to optimize your trading strategies."
+                link="Read More →"
+                linkTo="/strategy-optimization"
+              />
+            </div>
+          </div>
+        </motion.section>
+
         {/* Stats Overview */}
         <motion.section
           initial={{ opacity: 0 }}
@@ -529,47 +571,7 @@ export function Home() {
           </div>
         </motion.section>
 
-        {/* Tutorials & Guides */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="py-24 bg-gray-50"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Tutorials & Guides
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Learn how to create and optimize your trading strategies
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <TutorialCard
-                icon={<BookOpen className="w-6 h-6 text-blue-600" />}
-                title="Build Your First Strategy"
-                description="Learn how to create and backtest your first trading strategy in minutes."
-                link="Read More →"
-                linkTo="/form"
-              />
-              <TutorialCard
-                icon={<ChartBar className="w-6 h-6 text-blue-600" />}
-                title="Understanding Metrics"
-                description="Master the key metrics that determine your strategy's performance."
-                link="Read More →"
-                linkTo="/understanding-metrics"
-              />
-              <TutorialCard
-                icon={<Cog className="w-6 h-6 text-blue-600" />}
-                title="Strategy Optimization"
-                description="Learn advanced techniques to optimize your trading strategies."
-                link="Read More →"
-                linkTo="/strategy-optimization"
-              />
-            </div>
-          </div>
-        </motion.section>
+        
 
         {/* CTA Section */}
         <motion.section

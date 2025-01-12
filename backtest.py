@@ -31,7 +31,7 @@ def backtest_strategy(coin_object, current_data, strategy, verbose=False):
                 # stop_loss=coin_object.stop_loss,
                 # take_profit=coin_object.take_profit
             )
-            print(current_data['sma_20'], trade_result['profit_percentage'])
+            # print(current_data['sma_20'], trade_result['profit_percentage'])
             coin_object.exit_trade(trade_result, trade_result['profit_percentage'])
             strategy.reset_risk_manager()
             
