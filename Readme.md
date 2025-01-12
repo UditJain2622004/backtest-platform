@@ -3,6 +3,10 @@
  Powered by advanced AI analytics , ChatBot and real-time insights .
 
 
+### Solution Demo Video Link
+
+[Demo Video](https://www.youtube.com/watch?v=sSSDNEmsVww)
+
 ## Features
 
 ### Strategy Builder
