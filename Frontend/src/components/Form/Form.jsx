@@ -463,11 +463,11 @@ export function Form() {
 
         {/* Strategy and Asset Section */}
 
-        <motion.div className="grid md:grid-cols-2 gap-8 mb-8">
+        <motion.div className="grid md:grid-cols-2 gap-8 mb-8 border-1">
           <motion.div
             variants={sectionVariants}
             whileHover="hover"
-            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20"
+            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-black/20"
           >
             <StrategySection
               data={formData.strategy}
@@ -483,7 +483,7 @@ export function Form() {
           <motion.div
             variants={sectionVariants}
             whileHover="hover"
-            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20"
+            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-black/20"
           >
             <AssetSection
               data={formData.asset}
@@ -510,7 +510,7 @@ export function Form() {
             <motion.div
               variants={sectionVariants}
               whileHover="hover"
-              className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20"
+              className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-black/20"
             >
               <EntryPointSection
                 data={entryPoints}
@@ -523,7 +523,7 @@ export function Form() {
             <motion.div
               variants={sectionVariants}
               whileHover="hover"
-              className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20"
+              className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-black/20"
             >
               <ExitPointSection
                 data={exitPoints}
@@ -550,7 +550,7 @@ export function Form() {
           <motion.div
             variants={sectionVariants}
             whileHover="hover"
-            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg max-w-5xl mx-auto border border-white/20"
+            className="p-6 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg max-w-5xl mx-auto border border-black/20"
           >
             <RiskSection
               data={formData.risk}

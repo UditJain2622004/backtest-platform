@@ -26,12 +26,12 @@ export function RiskSection({ data, onChange, errors }) {
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Basic Parameters</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <motion.div 
-            className="bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-md border border-red-100/50"
+            className="bg-gradient-to-br from-red-200 to-white p-6 rounded-xl shadow-md border border-red-100/50"
             whileHover="hover"
             variants={cardVariants}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-100 rounded-lg">
+              <div className="p-2 bg-red-200 rounded-lg">
                 <TrendingDown className="w-5 h-5 text-red-600" />
               </div>
               <div>
@@ -61,7 +61,7 @@ export function RiskSection({ data, onChange, errors }) {
           </motion.div>
 
           <motion.div 
-            className="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-md border border-green-100/50"
+            className="bg-gradient-to-br from-green-200 to-white p-6 rounded-xl shadow-md border border-green-100/50"
             whileHover="hover"
             variants={cardVariants}
           >
@@ -103,7 +103,7 @@ export function RiskSection({ data, onChange, errors }) {
         <div className="space-y-6">
           {/* Trailing Stop Loss */}
           <motion.div 
-            className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-xl shadow-md border border-orange-100/50"
+            className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl shadow-md border border-orange-100/50"
             whileHover="hover"
             variants={cardVariants}
           >
@@ -158,7 +158,7 @@ export function RiskSection({ data, onChange, errors }) {
 
           {/* Trailing Take Profit */}
           <motion.div 
-            className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl shadow-md border border-blue-100/50"
+            className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-md border border-black-100"
             whileHover="hover"
             variants={cardVariants}
           >

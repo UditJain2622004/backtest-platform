@@ -175,7 +175,7 @@ export function EntryPointSection({ data, onChange, customIndicators, onCustomIn
     });
 
     return (
-      <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+      <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-black">
         <p className="text-sm text-gray-600 leading-relaxed">
           When <span className="font-medium text-gray-800">{mainCondition}</span>
           {additionalConditions.length > 0 && additionalConditions.map((condition, index) => (
@@ -200,7 +200,7 @@ export function EntryPointSection({ data, onChange, customIndicators, onCustomIn
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-black-100">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <Settings className="w-5 h-5 text-blue-600" />
@@ -212,7 +212,7 @@ export function EntryPointSection({ data, onChange, customIndicators, onCustomIn
         {data.map((indicator, index) => (
           <React.Fragment key={index}>
             <motion.div
-              className="p-4 border border-gray-200 rounded-md"
+              className="p-4 border border-black-200 rounded-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
