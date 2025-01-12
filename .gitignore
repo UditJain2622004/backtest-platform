@@ -8,7 +8,6 @@ dist/
 htmlcov/
 .tox/
 docs/_build/
-reports/
 
 
 # Python
