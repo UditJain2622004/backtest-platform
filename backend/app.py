@@ -99,7 +99,7 @@ def get_report(report_id):
     
     if os.path.exists(report_path):
         if download or format == 'pdf':
-            filename = f'trading_report_{report_id}.{format}'
+            filename = f'report_{report_id}.{format}'
             return send_file(
                 report_path,
                 mimetype='application/pdf' if format == 'pdf' else 'text/html',

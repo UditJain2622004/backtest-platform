@@ -90,11 +90,12 @@ def init_routes(db):
                 # save report to file
                 with open("test.json", 'w') as f:
                     json.dump(report, f)
-                insights = generate_insights(report)
+                insightsAndReportID = generate_insights(report)
+                report_id = insightsAndReportID['report_id']
                 print("Helloooooooo")
 
                 # generate random id
-                report_id = str(uuid.uuid4())
+                # report_id = str(uuid.uuid4())
                 # report_generator.save_report("reports",report_id,report,insights)
                 print("Helloooooooo")
 
@@ -106,16 +107,17 @@ def init_routes(db):
                     # user_id=current_user['_id'],
                     input_params=config,
                     results=report,
-                    report_id=report_filename,
-                    insights=insights['insights']
+                    report_id=report_id,
+                    insights=insightsAndReportID['insights']
                 )
 
                 return jsonify({
                     "status": "success",
                     "backtest_id": backtest_id,
-                    "report_url": f"/report/{report_filename}",
+                    "report_url": f"/report/{report_id}",
+                    "report_id":report_id,
                     "data":report,
-                    "insights":insights
+                    "insights":insightsAndReportID
                 }), 200
             else:
                 return jsonify({

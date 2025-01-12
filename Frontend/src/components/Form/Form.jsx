@@ -103,6 +103,8 @@ const sparkleVariants = {
 export function Form() {
   const navigate = useNavigate();
 
+  const [loading,setLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     strategy: { name: "", description: "" },
 
@@ -320,17 +322,19 @@ export function Form() {
 
       console.log("Form submitted:", formToSubmit);
 
+      setLoading(true)
       const url = "http://127.0.0.1:5000/api/backtest";
       const response = await axios.post(url, formToSubmit, {
         headers: {
           "Content-Type": "application/json", // Set the header for JSON
         },
       });
+      setLoading(false)
       console.log(response);
       console.log(response.data.data);
 
       if (response.status == 200) {
-        navigate("/graph", { state: { data: response.data.data , insights : response.data.insights.insights} });
+        navigate("/graph", { state: { data: response.data.data , insights : response.data.insights.insights, report_id:response.data.report_id} });
       }
     } else {
       console.log("Form has errors");

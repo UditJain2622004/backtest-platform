@@ -9,10 +9,14 @@ import { Navbar } from '../components/Navbar';
 import { Download, TrendingUp, LineChart, Brain, BarChart3, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 
+
+
 // eslint-disable-next-line react/prop-types
 export function Graph() {
+  
+
   const location = useLocation();
-  const { data , insights} = location.state || {};
+  const { data , insights, report_id} = location.state || {};
   console.log(location.state);
   console.log(data);
   
@@ -26,6 +30,39 @@ export function Graph() {
     { id: 'ai_insight', name: 'AI Insight', icon: <Brain className="w-5 h-5 text-purple-500" /> },
     { id: 'download', name: 'Download Report', icon: <Download className="w-5 h-5 text-blue-500" /> }
   ];
+
+
+  const handleDownloadPDF = async () => {
+    try {
+      // Replace this with your API endpoint for the GET request
+      const response = await fetch(`http://localhost:5000/report/${report_id}?format=pdf`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch PDF. Please try again.");
+      }
+  
+      // Convert response to a Blob
+      const blob = await response.blob();
+  
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "AI_Strategy_Analysis_Report.pdf"; // File name for download
+      link.click();
+  
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error.message);
+      alert("Unable to download the PDF. Please try again later.");
+    }
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -187,7 +224,7 @@ export function Graph() {
         <div className="border-t border-gray-200 pt-4">
           <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features:</h4>
           <ul className="list-disc list-inside space-y-2">
-            {insights.insights.map((point, index) => (
+            {insights.map((point, index) => (
               <li
                 key={index}
                 className="text-gray-700 leading-relaxed hover:text-purple-600 transition-colors duration-200"
@@ -208,7 +245,7 @@ export function Graph() {
               <h3 className="text-lg font-semibold text-gray-900">Download Options</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button className="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors duration-200 text-left">
+              <button onClick={handleDownloadPDF} className="p-4 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors duration-200 text-left">
                 <h4 className="font-medium text-blue-700 mb-1">PDF Report</h4>
                 <p className="text-sm text-gray-600">Download complete analysis as PDF</p>
               </button>
