@@ -12,11 +12,17 @@ import rb1 from '../assets/rb_1.png';
 import rb2 from '../assets/rb_2.png';
 import rb3 from '../assets/rb_3.png';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+
+  const handleRedirect = () => {
+    navigate('/form'); // Replace '/target-route' with your desired path
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -133,6 +139,7 @@ export function Home() {
 
                 <motion.div variants={itemVariants} className="flex gap-4">
                   <motion.button
+                  onClick={handleRedirect}
                     whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
                     whileTap={{ scale: 0.95 }}
                     className="px-8 py-4 bg-blue-600 text-white rounded-xl font-medium flex items-center gap-2 hover:bg-blue-700 transition-colors"
@@ -150,7 +157,7 @@ export function Home() {
                 </motion.div>
               </motion.div>
 
-              {/* Right Column with enhanced chart animation */}
+             
               <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}

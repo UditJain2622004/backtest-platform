@@ -25,6 +25,7 @@ def init_routes(db):
     # @token_required
     def run_backtest():
         try:
+            Coin.reset()
             config = request.get_json()
             print(config)
             print("Hellooooo")
@@ -77,6 +78,7 @@ def init_routes(db):
                     if len(current_data) > 0:
                         backtest_strategy(coin, current_data, strategy)
 
+            # reset all the metrics
             print("Worldssss")
             # Generate report
             if len(Coin.all_trades) > 0:

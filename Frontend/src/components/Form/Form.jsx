@@ -14,6 +14,8 @@ import { EntryPointSection } from "./EntryPointSection";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Loader from "./Loader";
+
 function simplifyConditions(obj) {
   const result = [];
 
@@ -334,6 +336,10 @@ export function Form() {
       console.log(response.data.data);
 
       if (response.status == 200) {
+        if(response.data.message == "No trades generated"){
+
+          navigate("/graph", { state: { data: [] , insights : [], report_id:""} });
+        }
         navigate("/graph", { state: { data: response.data.data , insights : response.data.insights.insights, report_id:response.data.report_id} });
       }
     } else {
@@ -571,10 +577,10 @@ export function Form() {
             whileTap={{ scale: 0.95 }}
             onClick={handleSubmit}
           >
-            Create Strategy
+            {loading?<Loader/>:"Backtest Strategy"}
           </motion.button>
 
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <motion.button
               type="button"
               onClick={() => console.log("Load Strategy")}
@@ -594,7 +600,7 @@ export function Form() {
             >
               Save Strategy
             </motion.button>
-          </div>
+          </div> */}
         </motion.div>
       </motion.form>
     </div>

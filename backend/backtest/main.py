@@ -29,6 +29,13 @@ class Coin:
         
         # Performance tracking
         self.trade_history = []
+
+    @classmethod
+    def reset(cls):
+        cls.all_trades = []
+        cls.curr_coin = "USDT"
+        cls.usdt_balance = 1
+        cls.position = False
         
 
         

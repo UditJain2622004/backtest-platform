@@ -64,7 +64,7 @@ export function Graph() {
     }
   };
 
-  const renderContent = () => {
+  const renderContent = () =>  {
     switch (activeSection) {
       case 'overview':
         return (
@@ -262,108 +262,119 @@ export function Graph() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Trading Analytics</h1>
-              <p className="mt-1 text-sm text-gray-500">
-                Comprehensive analysis of your trading strategy
-              </p>
-            </div>
-            <div className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-md border border-gray-200">
-              Last updated: {new Date(data.report_generated).toLocaleDateString()}
+    <>
+      {data.length <= 0 ? (
+        "No Trades Entered..."
+      ) : (
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+          {/* Header */}
+          <div className="bg-white shadow-sm border-b border-gray-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center py-6">
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">Trading Analytics</h1>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Comprehensive analysis of your trading strategy
+                  </p>
+                </div>
+                <div className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-md border border-gray-200">
+                  Last updated: {new Date(data.report_generated).toLocaleDateString()}
+                </div>
+              </div>
             </div>
           </div>
+  
+          {/* Navigation */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+            <nav className="flex space-x-2 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => setActiveSection(section.id)}
+                  className={`
+                    flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    ${activeSection === section.id
+                      ? "bg-blue-500 text-white shadow-md transform scale-105"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
+                    }
+                  `}
+                >
+                  <span className="mr-2">{section.icon}</span>
+                  {section.name}
+                </button>
+              ))}
+            </nav>
+          </div>
+  
+          {/* Main Content */}
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+          >
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="text-sm font-medium text-gray-500 mb-1">Total Return</div>
+                <div
+                  className={`text-2xl font-bold ${
+                    basic_metrics.total_return >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {basic_metrics.total_return}%
+                </div>
+              </motion.div>
+  
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="text-sm font-medium text-gray-500 mb-1">Win Rate</div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {basic_metrics.win_rate}%
+                </div>
+              </motion.div>
+  
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="text-sm font-medium text-gray-500 mb-1">Largest Win</div>
+                <div className="text-2xl font-bold text-green-600">
+                  {basic_metrics.largest_win}%
+                </div>
+              </motion.div>
+  
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="text-sm font-medium text-gray-500 mb-1">Largest Loss</div>
+                <div className="text-2xl font-bold text-red-600">
+                  {basic_metrics.largest_loss}%
+                </div>
+              </motion.div>
+            </div>
+  
+            {/* Charts */}
+            {renderContent()}
+          </motion.div>
         </div>
-      </div>
-
-      {/* Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <nav className="flex space-x-2 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              className={`
-                flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                ${activeSection === section.id
-                  ? 'bg-blue-500 text-white shadow-md transform scale-105'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
-                }
-              `}
-            >
-              <span className="mr-2">{section.icon}</span>
-              {section.name}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {/* Main Content */}
-      <motion.div
-        key={activeSection}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
-      >
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="text-sm font-medium text-gray-500 mb-1">Total Return</div>
-            <div className={`text-2xl font-bold ${basic_metrics.total_return >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {basic_metrics.total_return}%
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="text-sm font-medium text-gray-500 mb-1">Win Rate</div>
-            <div className="text-2xl font-bold text-blue-600">
-              {basic_metrics.win_rate}%
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="text-sm font-medium text-gray-500 mb-1">Largest Win</div>
-            <div className="text-2xl font-bold text-green-600">
-              {basic_metrics.largest_win}%
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="text-sm font-medium text-gray-500 mb-1">Largest Loss</div>
-            <div className="text-2xl font-bold text-red-600">
-              {basic_metrics.largest_loss}%
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Charts */}
-        {renderContent()}
-      </motion.div>
-    </div>
+      )}
+    </>
   );
+  
 } 
