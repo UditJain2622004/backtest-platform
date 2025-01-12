@@ -4,7 +4,8 @@ import logging
 import sys
 from datetime import datetime
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langchain_openai import OpenAI, ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
@@ -31,11 +32,15 @@ def get_and_save_insights(data):
     """Generate insights using Groq with Llama 3.1 Versatile"""
     try:
         # Initialize Groq with Llama 3.1 Versatile
-        llm = ChatGroq(
-            temperature=data.get("model_temperature", 0.7),
-            groq_api_key=os.getenv('GROQ_API_KEY'),
-            model_name="llama-3.1-70b-versatile",
-            max_tokens=4096
+        # llm = ChatGroq(
+        #     temperature=data.get("model_temperature", 0.7),
+        #     groq_api_key=os.getenv('GROQ_API_KEY'),
+        #     model_name="llama-3.1-70b-versatile",
+        #     max_tokens=4096
+        # )
+
+        llm = ChatOpenAI(
+            model_name = os.getenv("MODEL")
         )
 
         # Create output parser
