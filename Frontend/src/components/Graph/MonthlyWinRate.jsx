@@ -12,6 +12,8 @@ import {
   Legend,
   Filler
 } from 'chart.js';
+import { TrendingUp } from 'lucide-react';
+
 
 // Register ChartJS components
 ChartJS.register(
@@ -110,6 +112,7 @@ export function MonthlyWinRate({ monthlyMetrics }) {
 
   return (
     <AnimatePresence>
+      
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -117,6 +120,15 @@ export function MonthlyWinRate({ monthlyMetrics }) {
         transition={{ duration: 0.5 }}
         className="bg-white rounded-xl shadow-sm p-6 border border-gray-200"
       >
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-blue-500" />
+            <h3 className="text-lg font-semibold text-gray-900">Monthly Win Rate</h3>
+          </div>
+          {/* <div className="text-sm font-medium text-gray-500">
+            {months[0]} - {months[months.length - 1]}
+          </div> */}
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

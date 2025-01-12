@@ -7,15 +7,22 @@ import { StreakMetrics } from '../components/Graph/StreakMetrics';
 import { motion } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Download, TrendingUp, LineChart, Brain, BarChart3, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
+import { useLocation } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 export function Graph() {
-  const { basic_metrics, time_metrics, trade_analysis, streak_metrics } = data;
+  const location = useLocation();
+  const { data , insights} = location.state || {};
+  console.log(location.state);
+  console.log(data);
+  
+  const { basic_metrics, time_metrics, trade_analysis } = data;
   const [activeSection, setActiveSection] = useState('overview');
 
   const sections = [
     { id: 'overview', name: 'Overview', icon: '📊' },
     { id: 'monthly', name: 'Monthly Analysis', icon: '📅' },
-    { id: 'detailed', name: 'Detailed Analysis', icon: '📈' },
+    // { id: 'detailed', name: 'Detailed Analysis', icon: '📈' },
     { id: 'ai_insight', name: 'AI Insight', icon: <Brain className="w-5 h-5 text-purple-500" /> },
     { id: 'download', name: 'Download Report', icon: <Download className="w-5 h-5 text-blue-500" /> }
   ];
@@ -29,23 +36,32 @@ export function Graph() {
               winningTrades={basic_metrics.winning_trades}
               losingTrades={basic_metrics.losing_trades}
             />
-            <StreakMetrics
+            {/* <StreakMetrics
               streakMetrics={streak_metrics}
+            /> */}
+            <div className="grid grid-cols-1 gap-6">
+            <DurationProfitScatter
+              tradeDetails={trade_analysis.trade_details}
             />
+          </div>
           </div>
         );
       case 'monthly':
         const monthlyMetrics = time_metrics?.monthly_metrics || {};
-        const avgMonthlyReturn = monthlyMetrics.avg_monthly_return || 0;
-        const bestMonth = monthlyMetrics.best_month || { return: 0, month: 'N/A' };
-        const worstMonth = monthlyMetrics.worst_month || { return: 0, month: 'N/A' };
-        const profitableMonths = monthlyMetrics.profitable_months || 0;
+        const months = Object.keys(monthlyMetrics);
+        const returns = months.map(month => monthlyMetrics[month].return);
+        const totalReturn = returns.reduce((acc, val) => acc + val, 0).toFixed(2);
+        const avgMonthlyReturn = (totalReturn / returns.length).toFixed(2);
+        // const avgMonthlyReturn = monthlyMetrics.avg_monthly_return || 0;
+        const bestMonth = time_metrics.best_month || { return: 0, month: 'N/A' };
+        const worstMonth = time_metrics.worst_month || { return: 0, month: 'N/A' };
+        // const profitableMonths = monthlyMetrics.profitable_months || 0;
 
         return (
           <div className="space-y-6">
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
@@ -61,7 +77,7 @@ export function Graph() {
                   </div>
                   <div className="text-sm text-gray-500">Average Monthly Return</div>
                 </div>
-              </motion.div>
+              </motion.div> */}
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -75,10 +91,10 @@ export function Graph() {
                 </div>
                 <div className="mt-2">
                   <div className="text-2xl font-bold text-gray-900">
-                    {bestMonth.return}%
+                    {monthlyMetrics[bestMonth].return}%
                   </div>
                   <div className="text-sm text-gray-500">
-                    {bestMonth.month}
+                    {bestMonth}
                   </div>
                 </div>
               </motion.div>
@@ -95,10 +111,10 @@ export function Graph() {
                 </div>
                 <div className="mt-2">
                   <div className="text-2xl font-bold text-gray-900">
-                    {worstMonth.return}%
+                    {monthlyMetrics[worstMonth].return}%
                   </div>
                   <div className="text-sm text-gray-500">
-                    {worstMonth.month}
+                    {worstMonth}
                   </div>
                 </div>
               </motion.div>
@@ -111,11 +127,11 @@ export function Graph() {
               >
                 <div className="flex items-center gap-2 text-purple-500 mb-2">
                   <Calendar className="w-5 h-5" />
-                  <h3 className="font-medium">Profitable Months</h3>
+                  <h3 className="font-medium">Average Monthly Returns</h3>
                 </div>
                 <div className="mt-2">
                   <div className="text-2xl font-bold text-gray-900">
-                    {profitableMonths}%
+                    {avgMonthlyReturn}%
                   </div>
                   <div className="text-sm text-gray-500">Success Rate</div>
                 </div>
@@ -145,27 +161,44 @@ export function Graph() {
             </div>
           </div>
         );
-      case 'detailed':
-        return (
-          <div className="grid grid-cols-1 gap-6">
-            <DurationProfitScatter
-              tradeDetails={trade_analysis.trade_details}
-            />
-          </div>
-        );
+      // case 'detailed':
+      //   return (
+      //     <div className="grid grid-cols-1 gap-6">
+      //       <DurationProfitScatter
+      //         tradeDetails={trade_analysis.trade_details}
+      //       />
+      //     </div>
+      //   );
       case 'ai_insight':
         return (
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center gap-2 mb-6">
-              <Brain className="w-6 h-6 text-purple-500" />
-              <h3 className="text-lg font-semibold text-gray-900">AI Strategy Analysis</h3>
-            </div>
-            <div className="space-y-4">
-              <div className="p-4 bg-purple-50 rounded-lg border border-purple-100">
-                <p className="text-gray-700">AI-powered analysis of your trading strategy will appear here...</p>
-              </div>
-            </div>
-          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="bg-purple-100 p-2 rounded-full">
+          <Brain className="w-6 h-6 text-purple-600" />
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 tracking-wide">AI Strategy Analysis</h3>
+      </div>
+      <div className="space-y-6">
+        <div className="p-5 bg-purple-50 rounded-lg border border-purple-200 shadow-sm">
+          <p className="text-gray-800 leading-relaxed">
+            Here are some AI-powered analysis of your trading strategy : 
+          </p>
+        </div>
+        <div className="border-t border-gray-200 pt-4">
+          <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features:</h4>
+          <ul className="list-disc list-inside space-y-2">
+            {insights.insights.map((point, index) => (
+              <li
+                key={index}
+                className="text-gray-700 leading-relaxed hover:text-purple-600 transition-colors duration-200"
+              >
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
         );
       case 'download':
         return (
@@ -179,10 +212,10 @@ export function Graph() {
                 <h4 className="font-medium text-blue-700 mb-1">PDF Report</h4>
                 <p className="text-sm text-gray-600">Download complete analysis as PDF</p>
               </button>
-              <button className="p-4 bg-green-50 rounded-lg border border-green-100 hover:bg-green-100 transition-colors duration-200 text-left">
+              {/* <button className="p-4 bg-green-50 rounded-lg border border-green-100 hover:bg-green-100 transition-colors duration-200 text-left">
                 <h4 className="font-medium text-green-700 mb-1">Excel Export</h4>
                 <p className="text-sm text-gray-600">Export data to Excel spreadsheet</p>
-              </button>
+              </button> */}
             </div>
           </div>
         );

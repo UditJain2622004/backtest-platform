@@ -11,7 +11,7 @@ class Condition:
         if self.rhs['type'] == 'indicator':
             rhs_value = self._get_value(self.rhs['indicator'], data)
         else:  # number_input
-            rhs_value = self.rhs['value']
+            rhs_value = int(self.rhs['value'])
             # Handle percentage calculations if needed
             # if self.rhs.get('sign') == '%':
             #     rhs_value = lhs_value * (1 + rhs_value/100)
@@ -122,13 +122,13 @@ class RiskManager:
                 return True
                 
         if self.take_profit:
-            take_profit_price = entry_price * (1 + self.take_profit['value']/100)
+            take_profit_price = entry_price * (1 + int(self.take_profit['value'])/100)
             if current_price >= take_profit_price:
                 return True
                 
         if self.trailing_stop:
-            activation_pct = self.trailing_stop['activation']['value']
-            callback_pct = self.trailing_stop['callback']['value']
+            activation_pct = int(self.trailing_stop['activation']['value'])
+            callback_pct = int(self.trailing_stop['callback']['value'])
             
             # Only activate trailing stop if we're in sufficient profit
             if profit_pct >= activation_pct:
@@ -138,8 +138,8 @@ class RiskManager:
                     return True
                     
         if self.trailing_take_profit:
-            activation_pct = self.trailing_take_profit['activation']['value']
-            callback_pct = self.trailing_take_profit['callback']['value']
+            activation_pct = int(self.trailing_take_profit['activation']['value'])
+            callback_pct = int(self.trailing_take_profit['callback']['value'])
             
             if profit_pct >= activation_pct:
                 print("Trailing take profit activated")

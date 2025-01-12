@@ -54,7 +54,7 @@ def init_routes(db):
                 prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
                 df = transform_data(prices, PAIR)
                     #save to file
-                    # df.to_csv(f'../data/{PAIR}.csv', index=False)
+                # df.to_csv(f'../data/{PAIR}.csv', index=False)
 
                 
                 coin_objects.append(Coin(coin, PAIR, df))
@@ -70,7 +70,9 @@ def init_routes(db):
             print("Worldssss")
             # Run the backtest
             for t in range(len(coin_objects[0].df)):
+                print(t)
                 for coin in coin_objects:
+                    print(coin.df.iloc[t]["candle_return"])
                     current_data = coin.df.iloc[t]
                     if len(current_data) > 0:
                         backtest_strategy(coin, current_data, strategy)
@@ -111,7 +113,9 @@ def init_routes(db):
                 return jsonify({
                     "status": "success",
                     "backtest_id": backtest_id,
-                    "report_url": f"/report/{report_filename}"
+                    "report_url": f"/report/{report_filename}",
+                    "data":report,
+                    "insights":insights
                 }), 200
             else:
                 return jsonify({

@@ -8,7 +8,7 @@ import { Signup } from './pages/SignUp'
 import { Graph } from './pages/Graph'
 import { StrategyOptimization } from './pages/StrategyOptimization'
 import { UnderstandingMetrics } from './pages/UnderstandingMetrics'
-import data from './data.json';
+// import data from './data.json';
 
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/form" element={<Form />} />
-        <Route path="/graph" element={<Graph data = {data}/>} />
+        <Route path="/graph" element={<Graph/>} />
         <Route path="/strategy-optimization" element={<StrategyOptimization />} />
         <Route path="/understanding-metrics" element={<UnderstandingMetrics />} />
       </Routes>
