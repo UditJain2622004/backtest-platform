@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Download, TrendingUp, LineChart, Brain, BarChart3, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
 import { useLocation } from "react-router-dom";
+import { AIInsight } from '@/components/Graph/AIInsight';
 
 
 
@@ -208,34 +209,7 @@ export function Graph() {
       //   );
       case 'ai_insight':
         return (
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="bg-purple-100 p-2 rounded-full">
-          <Brain className="w-6 h-6 text-purple-600" />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 tracking-wide">AI Strategy Analysis</h3>
-      </div>
-      <div className="space-y-6">
-        <div className="p-5 bg-purple-50 rounded-lg border border-purple-200 shadow-sm">
-          <p className="text-gray-800 leading-relaxed">
-            Here are some AI-powered analysis of your trading strategy : 
-          </p>
-        </div>
-        <div className="border-t border-gray-200 pt-4">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features:</h4>
-          <ul className="list-disc list-inside space-y-2">
-            {insights.map((point, index) => (
-              <li
-                key={index}
-                className="text-gray-700 leading-relaxed hover:text-purple-600 transition-colors duration-200"
-              >
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
+          <AIInsight insights={insights} data={data}/>
         );
       case 'download':
         return (

@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request, render_template_string
+from flask import Flask, jsonify, send_file, request, render_template_string
 from flask_cors import CORS
 from auth.routes import auth
 from routes.backtest_routes import backtest_routes, init_routes
@@ -6,6 +6,7 @@ from reports.builder import ReportManager, ReportBuilder
 import os
 from datetime import datetime
 from auth.models import Database
+from chatbot.openai import chat_completion
 
 
 app = Flask(__name__)
@@ -89,6 +90,21 @@ def index():
     """
     
     return render_template_string(template, reports=reports)
+
+
+@app.route('/chat', methods=['POST'])
+def process_data():
+    try:
+        # Parse JSON input
+        input_data = request.get_json()
+        print(input_data)
+        # Call the function with the input data
+        result = chat_completion(input_data["message"],input_data["backtest_results"])
+        
+        # Return the response
+        return jsonify({"message":result}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/report/<report_id>')
 def get_report(report_id):
