@@ -1,5 +1,5 @@
-# NO-Code Backtest Algorithmic Trading Platform 
- A modern No-Code Trading Strategy Platform that empowers traders to create Strategy, backtest, and optimize their trading strategies without writing a single line of code. 
+# TradeWave - A No-Code Algorithmic Trading Backtesting Platform 
+ A modern No-Code Trading Strategy Backtesting Platform that empowers traders to create Strategy, backtest, and optimize their trading strategies without writing a single line of code. 
  Powered by advanced AI analytics , ChatBot and real-time insights .
 
 
@@ -11,10 +11,8 @@
   - AND/OR logic combinations
   - Custom indicator creation
 - **Risk Management**:
-  - Position sizing
   - Stop-loss configuration
   - Take-profit settings
-- **Asset Selection**: Multiple trading instruments support
 
 ### Analytics Dashboard
 - **Performance Metrics**:
@@ -22,7 +20,6 @@
   Monthly Returns: Track your strategy's monthly performance
   Win Rate: Analyze success ratio
   Risk/Reward: Evaluate risk-adjusted returns
-  Drawdown Analysis: Monitor maximum losses
   ```
 
 - **Interactive Charts**:
@@ -30,7 +27,6 @@
   📈 Monthly Returns Chart
   📊 Win/Loss Ratio
   ⏱️ Trade Duration Analysis
-  📉 Drawdown Visualization
   ```
 
 - **AI Assistant**:
