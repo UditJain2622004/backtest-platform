@@ -6,6 +6,7 @@
 ### Solution Demo Video Link
 
 [Demo Video](https://www.youtube.com/watch?v=sSSDNEmsVww)
+[![Alt text](https://img.youtube.com/vi/sSSDNEmsVww/0.jpg)](https://www.youtube.com/watch?v=sSSDNEmsVww)
 
 ## Features
 
