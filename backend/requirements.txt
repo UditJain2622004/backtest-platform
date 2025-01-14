@@ -13,4 +13,6 @@ langchain_openai
 openai
 gunicorn
 Werkzeug<2.1
-
+pandas
+numpy
+requests
