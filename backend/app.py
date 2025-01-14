@@ -10,7 +10,7 @@ from chatbot.openai import chat_completion
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 db = Database()
 init_routes(db)

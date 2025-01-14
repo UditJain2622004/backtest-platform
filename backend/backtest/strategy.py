@@ -103,6 +103,7 @@ class Strategy:
         if risk_exit:
             print("Risk management exit condition met")
         return strategy_exit or risk_exit
+        # return strategy_exit
         
     def reset_risk_manager(self):
         """Reset risk manager for new trade"""
