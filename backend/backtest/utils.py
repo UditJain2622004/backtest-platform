@@ -64,7 +64,7 @@ def transform_data(prices, PAIR):
     df["open time"] = pd.to_datetime(df["open time"], unit="ms")
     df["close time"] = pd.to_datetime(df["close time"], unit="ms")
     
-
+    print("Calculated technical indicators...")
     
     return df
 
@@ -95,8 +95,9 @@ def fetch_price_history_by_interval(symbol, interval, start_time, end_time=None)
         }
         if end_time:
             params["endTime"] = end_time
-
+        print("Fetching data...")
         response = requests.get(url, params=params)
+        print("Fetched data...")
         response.raise_for_status()
         data = response.json()
         

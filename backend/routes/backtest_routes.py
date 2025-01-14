@@ -53,8 +53,11 @@ def init_routes(db):
                 #     df = pd.read_csv(f'../data/{PAIR}.csv')
                 #     # df = calculate_technical_indicators(df)
                 # else:
+                print("hey")
                 prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
+                print("print")
                 df = transform_data(prices, PAIR)
+                print("hello")
                     #save to file
                 # df.to_csv(f'../data/{PAIR}.csv', index=False)
 

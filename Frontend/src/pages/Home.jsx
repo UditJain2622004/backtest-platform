@@ -1,18 +1,30 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { 
-  ArrowRight, TrendingUp, BarChart2, Settings, BookOpen, ChartBar, Cog,
-  LineChart, Zap, Target, Award, Clock, Shield, CheckCircle
-} from 'lucide-react';
-import tradingImage from '../assets/trading-chart.jpg'; 
-import tradingImage2 from '../assets/t2.jpg';
-import { Footer } from '../components/Footer';
-import { Navbar } from '../components/Navbar';
-import rb1 from '../assets/rb_1.png';
-import rb2 from '../assets/rb_2.png';
-import rb3 from '../assets/rb_3.png';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  ArrowRight,
+  TrendingUp,
+  BarChart2,
+  Settings,
+  BookOpen,
+  ChartBar,
+  Cog,
+  LineChart,
+  Zap,
+  Target,
+  Award,
+  Clock,
+  Shield,
+  CheckCircle,
+} from "lucide-react";
+import tradingImage from "../assets/trading-chart.jpg";
+import tradingImage2 from "../assets/t2.jpg";
+import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import rb1 from "../assets/rb_1.png";
+import rb2 from "../assets/rb_2.png";
+import rb3 from "../assets/rb_3.png";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
   const navigate = useNavigate();
@@ -21,7 +33,7 @@ export function Home() {
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   const handleRedirect = () => {
-    navigate('/form'); // Replace '/target-route' with your desired path
+    navigate("/form"); // Replace '/target-route' with your desired path
   };
 
   const containerVariants = {
@@ -29,9 +41,9 @@ export function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
@@ -39,20 +51,20 @@ export function Home() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const staggerContainer = {
@@ -61,9 +73,9 @@ export function Home() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const featuredStrategies = [
@@ -93,7 +105,7 @@ export function Home() {
       totalReturn: 215.6,
       tradeCount: 189,
       lastMonthReturn: 18.5,
-    }
+    },
   ];
 
   return (
@@ -103,7 +115,7 @@ export function Home() {
         {/* Hero Section */}
         <div className="pt-24 pb-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-          <motion.div 
+          <motion.div
             className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
             style={{ opacity, scale }}
           >
@@ -121,7 +133,7 @@ export function Home() {
                   transition={{ duration: 0.8 }}
                   className="absolute -top-20 -left-20 w-40 h-40 bg-blue-50 rounded-full filter blur-3xl"
                 />
-                <motion.h1 
+                <motion.h1
                   variants={itemVariants}
                   className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight"
                 >
@@ -129,18 +141,21 @@ export function Home() {
                   <span className="text-blue-600"> Made Simple</span>
                 </motion.h1>
 
-                <motion.p 
+                <motion.p
                   variants={itemVariants}
                   className="text-xl text-gray-600 leading-relaxed"
                 >
-                  Create, backtest, and optimize your trading strategies without writing a single line of code.
-                  Get started in minutes.
+                  Create, backtest, and optimize your trading strategies without
+                  writing a single line of code. Get started in minutes.
                 </motion.p>
 
                 <motion.div variants={itemVariants} className="flex gap-4">
                   <motion.button
-                  onClick={handleRedirect}
-                    whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
+                    onClick={handleRedirect}
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                    }}
                     whileTap={{ scale: 0.95 }}
                     className="px-8 py-4 bg-blue-600 text-white rounded-xl font-medium flex items-center gap-2 hover:bg-blue-700 transition-colors"
                   >
@@ -157,7 +172,6 @@ export function Home() {
                 </motion.div>
               </motion.div>
 
-             
               <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -199,8 +213,8 @@ export function Home() {
             <div className="grid md:grid-cols-3 gap-8">
               <TutorialCard
                 icon={<BookOpen className="w-6 h-6 text-blue-600" />}
-                title="Build Your First Strategy"
-                description="Learn how to create and backtest your first trading strategy in minutes."
+                title="What's Algorithmic Trading and backtesting?"
+                description="A beginner's guide to Algorithmic Trading and Backtesting."
                 link="Read More →"
                 linkTo="/form"
               />
@@ -241,7 +255,8 @@ export function Home() {
                 Platform Statistics
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Real-time insights into our platform's performance and user achievements
+                Real-time insights into our platform's performance and user
+                achievements
               </p>
             </motion.div>
 
@@ -286,7 +301,9 @@ export function Home() {
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500 mb-1">Total Users</p>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Total Users
+                  </p>
                   <motion.p
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -297,7 +314,9 @@ export function Home() {
                   </motion.p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500 mb-1">Daily Trades</p>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Daily Trades
+                  </p>
                   <motion.p
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -308,7 +327,9 @@ export function Home() {
                   </motion.p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500 mb-1">Success Rate</p>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Success Rate
+                  </p>
                   <motion.p
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -319,7 +340,9 @@ export function Home() {
                   </motion.p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500 mb-1">Server Uptime</p>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Server Uptime
+                  </p>
                   <motion.p
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -343,10 +366,7 @@ export function Home() {
           className="py-24 bg-gradient-to-b from-white via-blue-50 to-white"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              className="text-center mb-20"
-              variants={fadeInUp}
-            >
+            <motion.div className="text-center mb-20" variants={fadeInUp}>
               <motion.span
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -355,11 +375,12 @@ export function Home() {
                 Why Choose Us
               </motion.span>
               <h2 className="text-4xl font-bold text-gray-900 mt-2 mb-4">
-                Powerful Features for 
+                Powerful Features for
                 <span className="text-blue-600"> Smarter Trading</span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Experience the power of algorithmic trading with our comprehensive suite of tools
+                Experience the power of algorithmic trading with our
+                comprehensive suite of tools
               </p>
             </motion.div>
 
@@ -368,21 +389,33 @@ export function Home() {
                 icon={<Zap className="w-7 h-7" />}
                 title="Lightning Fast Execution"
                 description="Backtest your strategies in seconds with our optimized engine"
-                benefits={["Sub-millisecond execution", "Real-time updates", "Low latency"]}
+                benefits={[
+                  "Sub-millisecond execution",
+                  "Real-time updates",
+                  "Low latency",
+                ]}
                 color="blue"
               />
               <FeatureCard
                 icon={<Target className="w-7 h-7" />}
                 title="Precision Trading"
                 description="Advanced algorithms ensuring accurate entry and exit points"
-                benefits={["Smart order routing", "Multi-timeframe analysis", "Risk management"]}
+                benefits={[
+                  "Smart order routing",
+                  "Multi-timeframe analysis",
+                  "Risk management",
+                ]}
                 color="green"
               />
               <FeatureCard
                 icon={<Shield className="w-7 h-7" />}
                 title="Advanced Security"
                 description="Enterprise-grade security protecting your strategies"
-                benefits={["End-to-end encryption", "Two-factor auth", "24/7 monitoring"]}
+                benefits={[
+                  "End-to-end encryption",
+                  "Two-factor auth",
+                  "24/7 monitoring",
+                ]}
                 color="purple"
               />
             </div>
@@ -395,27 +428,28 @@ export function Home() {
               className="grid md:grid-cols-2 gap-12 items-center bg-white rounded-2xl p-8 shadow-lg"
             >
               <div className="space-y-6">
-                <motion.h3 
+                <motion.h3
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   className="text-2xl font-bold text-gray-900"
                 >
                   Advanced Analytics Dashboard
                 </motion.h3>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                   className="text-gray-600"
                 >
-                  Get deep insights into your trading performance with our comprehensive analytics suite.
+                  Get deep insights into your trading performance with our
+                  comprehensive analytics suite.
                 </motion.p>
                 <motion.ul className="space-y-4">
                   {[
                     "Real-time performance tracking",
                     "Custom indicator development",
                     "Risk analysis tools",
-                    "Portfolio optimization"
+                    "Portfolio optimization",
                   ].map((feature, index) => (
                     <motion.li
                       key={feature}
@@ -465,9 +499,12 @@ export function Home() {
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           >
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Strategies</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Featured Strategies
+              </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Discover high-performing trading strategies created by our community of expert traders
+                Discover high-performing trading strategies created by our
+                community of expert traders
               </p>
             </div>
 
@@ -521,7 +558,7 @@ export function Home() {
               >
                 Recent Activity
               </motion.h2>
-              <select 
+              <select
                 className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 defaultValue="date"
               >
@@ -571,8 +608,6 @@ export function Home() {
           </div>
         </motion.section>
 
-        
-
         {/* CTA Section */}
         <motion.section
           initial={{ opacity: 0 }}
@@ -585,7 +620,8 @@ export function Home() {
               Ready to Start Trading?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of traders who are already using our platform to automate their trading strategies.
+              Join thousands of traders who are already using our platform to
+              automate their trading strategies.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -612,20 +648,18 @@ function StatsCard({ title, value, icon, percentage, trend }) {
       className="bg-white p-6 rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="flex items-center justify-between mb-4">
-        <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
-          {icon}
-        </div>
+        <div className="p-3 bg-blue-50 rounded-xl text-blue-600">{icon}</div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
           className={`px-2.5 py-1 rounded-lg text-sm font-medium ${
-            trend === 'up' 
-              ? 'bg-green-50 text-green-600' 
-              : trend === 'down' 
-                ? 'bg-red-50 text-red-600'
-                : 'bg-gray-50 text-gray-600'
+            trend === "up"
+              ? "bg-green-50 text-green-600"
+              : trend === "down"
+              ? "bg-red-50 text-red-600"
+              : "bg-gray-50 text-gray-600"
           }`}
         >
           {percentage}
@@ -646,10 +680,10 @@ function StatsCard({ title, value, icon, percentage, trend }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className={`text-sm font-medium ${
-              trend === 'up' ? 'text-green-600' : 'text-red-600'
+              trend === "up" ? "text-green-600" : "text-red-600"
             }`}
           >
-            {trend === 'up' ? '↑' : '↓'}
+            {trend === "up" ? "↑" : "↓"}
           </motion.span>
         )}
       </motion.div>
@@ -664,8 +698,8 @@ function StrategyCard({ strategy }) {
       className="bg-white p-6 rounded-xl shadow-md border border-gray-200"
     >
       <div className="flex items-center gap-4 mb-4">
-        <img 
-          src={strategy.avatar} 
+        <img
+          src={strategy.avatar}
           alt={strategy.author}
           className="w-12 h-12 rounded-full object-cover"
         />
@@ -674,42 +708,51 @@ function StrategyCard({ strategy }) {
           <p className="text-sm text-gray-500">by {strategy.author}</p>
         </div>
       </div>
-      
+
       <div className="space-y-3">
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-600">Win Rate</span>
-          <span className={`text-sm font-medium ${
-            strategy.winRate >= 50 ? 'text-green-600' : 'text-red-600'
-          }`}>
+          <span
+            className={`text-sm font-medium ${
+              strategy.winRate >= 50 ? "text-green-600" : "text-red-600"
+            }`}
+          >
             {strategy.winRate}%
           </span>
         </div>
-        
+
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-600">Total Return</span>
-          <span className={`text-sm font-medium ${
-            strategy.totalReturn >= 0 ? 'text-green-600' : 'text-red-600'
-          }`}>
+          <span
+            className={`text-sm font-medium ${
+              strategy.totalReturn >= 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
             {strategy.totalReturn}%
           </span>
         </div>
-        
+
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-600">Trade Count</span>
-          <span className="text-sm font-medium text-gray-900">{strategy.tradeCount}</span>
+          <span className="text-sm font-medium text-gray-900">
+            {strategy.tradeCount}
+          </span>
         </div>
       </div>
 
       <div className="mt-4 pt-4 border-t border-gray-100">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm text-gray-600">Last 30 Days</span>
-          <span className={`text-sm font-medium ${
-            strategy.lastMonthReturn >= 0 ? 'text-green-600' : 'text-red-600'
-          }`}>
-            {strategy.lastMonthReturn >= 0 ? '+' : ''}{strategy.lastMonthReturn}%
+          <span
+            className={`text-sm font-medium ${
+              strategy.lastMonthReturn >= 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {strategy.lastMonthReturn >= 0 ? "+" : ""}
+            {strategy.lastMonthReturn}%
           </span>
         </div>
-        
+
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -727,14 +770,18 @@ function ActivityRow({ name, profit, timeframe, isNegative = false }) {
     <motion.tr
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ backgroundColor: '#f9fafb' }}
+      whileHover={{ backgroundColor: "#f9fafb" }}
       className="hover:bg-gray-50 transition-colors"
     >
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm font-medium text-gray-900">{name}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className={`text-sm font-medium ${isNegative ? 'text-red-600' : 'text-green-600'}`}>
+        <div
+          className={`text-sm font-medium ${
+            isNegative ? "text-red-600" : "text-green-600"
+          }`}
+        >
           {profit}
         </div>
       </td>
@@ -760,15 +807,9 @@ function TutorialCard({ icon, title, description, link, linkTo }) {
       whileHover={{ y: -5 }}
       className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
     >
-      <div className="mb-4">
-        {icon}
-      </div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-        {title}
-      </h3>
-      <p className="text-gray-600 text-sm mb-4">
-        {description}
-      </p>
+      <div className="mb-4">{icon}</div>
+      <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+      <p className="text-gray-600 text-sm mb-4">{description}</p>
       <Link to={linkTo}>
         <motion.span
           whileHover={{ x: 5 }}
@@ -785,7 +826,7 @@ function FeatureCard({ icon, title, description, benefits, color }) {
   const colors = {
     blue: "from-blue-500 to-blue-600",
     green: "from-green-500 to-green-600",
-    purple: "from-purple-500 to-purple-600"
+    purple: "from-purple-500 to-purple-600",
   };
 
   return (
@@ -817,7 +858,9 @@ function FeatureCard({ icon, title, description, benefits, color }) {
               transition={{ delay: index * 0.1 }}
               className="flex items-center gap-2 text-sm text-gray-600"
             >
-              <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${colors[color]}`} />
+              <div
+                className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${colors[color]}`}
+              />
               {benefit}
             </motion.li>
           ))}
@@ -825,4 +868,4 @@ function FeatureCard({ icon, title, description, benefits, color }) {
       </div>
     </motion.div>
   );
-} 
+}

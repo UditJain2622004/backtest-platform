@@ -105,7 +105,7 @@ const sparkleVariants = {
 export function Form() {
   const navigate = useNavigate();
 
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     strategy: { name: "", description: "" },
@@ -324,23 +324,30 @@ export function Form() {
 
       console.log("Form submitted:", formToSubmit);
 
-      setLoading(true)
-      const url = "http://127.0.0.1:5000/api/backtest";
+      setLoading(true);
+      const url = "https://backtest-platform.onrender.com/api/backtest";
       const response = await axios.post(url, formToSubmit, {
         headers: {
           "Content-Type": "application/json", // Set the header for JSON
         },
       });
-      setLoading(false)
+      setLoading(false);
       console.log(response);
       console.log(response.data.data);
 
       if (response.status == 200) {
-        if(response.data.message == "No trades generated"){
-
-          navigate("/graph", { state: { data: [] , insights : [], report_id:""} });
+        if (response.data.message == "No trades generated") {
+          navigate("/graph", {
+            state: { data: [], insights: [], report_id: "" },
+          });
         }
-        navigate("/graph", { state: { data: response.data.data , insights : response.data.insights.insights, report_id:response.data.report_id} });
+        navigate("/graph", {
+          state: {
+            data: response.data.data,
+            insights: response.data.insights.insights,
+            report_id: response.data.report_id,
+          },
+        });
       }
     } else {
       console.log("Form has errors");
@@ -577,7 +584,7 @@ export function Form() {
             whileTap={{ scale: 0.95 }}
             onClick={handleSubmit}
           >
-            {loading?<Loader/>:"Backtest Strategy"}
+            {loading ? <Loader /> : "Backtest Strategy"}
           </motion.button>
 
           {/* <div className="flex gap-4">
