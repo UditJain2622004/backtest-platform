@@ -325,7 +325,7 @@ export function Form() {
       console.log("Form submitted:", formToSubmit);
 
       setLoading(true);
-      const url = "https://backtest-platform.onrender.com/api/backtest";
+      const url = "https://tradewave-mzyn.onrender.com/api/backtest";
       const response = await axios.post(url, formToSubmit, {
         headers: {
           "Content-Type": "application/json", // Set the header for JSON
@@ -586,6 +586,11 @@ export function Form() {
           >
             {loading ? <Loader /> : "Backtest Strategy"}
           </motion.button>
+          <p className="text-sm text-gray-600">
+            {loading
+              ? "As we are using a free hosting service, sometimes backtesting may take some time. Please be patient. We promise it's worth the wait!"
+              : ""}
+          </p>
 
           {/* <div className="flex gap-4">
             <motion.button

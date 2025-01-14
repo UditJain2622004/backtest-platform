@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, ArrowRight, Mail, Lock, User } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, ArrowRight, Mail, Lock, User } from "lucide-react";
 
 const FloatingElement = ({ delay, duration, className }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0 }}
-    animate={{ 
+    animate={{
       opacity: [0.1, 0.3, 0.1],
       scale: [1, 1.2, 1],
-      rotate: [0, 180, 360]
+      rotate: [0, 180, 360],
     }}
-    transition={{ 
+    transition={{
       duration: duration,
       delay: delay,
       repeat: Infinity,
-      repeatType: "reverse"
+      repeatType: "reverse",
     }}
     className={className}
   />
@@ -24,17 +24,17 @@ const FloatingElement = ({ delay, duration, className }) => (
 export function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/form');
+    navigate("/form");
   };
 
   return (
@@ -42,12 +42,12 @@ export function Signup() {
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Animated gradient circles */}
-        <FloatingElement 
+        <FloatingElement
           delay={0}
           duration={15}
           className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"
         />
-        <FloatingElement 
+        <FloatingElement
           delay={2}
           duration={20}
           className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"
@@ -57,36 +57,37 @@ export function Signup() {
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            initial={{ 
+            initial={{
               opacity: 0,
               x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight
+              y: Math.random() * window.innerHeight,
             }}
-            animate={{ 
+            animate={{
               opacity: [0.1, 0.3, 0.1],
-              y: [0, -20, 0]
+              y: [0, -20, 0],
             }}
             transition={{
               duration: 3,
               delay: i * 0.2,
               repeat: Infinity,
-              repeatType: "reverse"
+              repeatType: "reverse",
             }}
             className="absolute w-1 h-1 bg-blue-400 rounded-full"
           />
         ))}
 
         {/* Grid pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-5" 
+        <div
+          className="absolute inset-0 bg-grid-pattern opacity-5"
           style={{
             backgroundImage: `radial-gradient(circle, #3B82F6 1px, transparent 1px)`,
-            backgroundSize: '30px 30px'
+            backgroundSize: "30px 30px",
           }}
         />
       </div>
 
       {/* Main content container */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -107,8 +108,12 @@ export function Signup() {
                   transition={{ type: "spring", stiffness: 200, damping: 15 }}
                   className="w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl mx-auto mb-4 shadow-lg"
                 />
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Create Account</h2>
-                <p className="text-sm text-gray-600">Join us to start your trading journey</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Create Account
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Join us to start your trading journey
+                </p>
               </div>
 
               <motion.form
@@ -132,7 +137,9 @@ export function Signup() {
                       <input
                         type="text"
                         value={formData.username}
-                        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, username: e.target.value })
+                        }
                         className="pl-10 w-full px-3 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="Enter your username"
                       />
@@ -152,7 +159,9 @@ export function Signup() {
                       <input
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         className="pl-10 w-full px-3 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="Enter your email"
                       />
@@ -172,7 +181,9 @@ export function Signup() {
                       <input
                         type={showPassword ? "text" : "password"}
                         value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, password: e.target.value })
+                        }
                         className="pl-10 w-full px-3 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="Create a password"
                       />
@@ -203,7 +214,12 @@ export function Signup() {
                       <input
                         type="password"
                         value={formData.confirmPassword}
-                        onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            confirmPassword: e.target.value,
+                          })
+                        }
                         className="pl-10 w-full px-3 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="Confirm your password"
                       />
@@ -227,8 +243,11 @@ export function Signup() {
                 </motion.button>
 
                 <p className="text-center text-sm text-gray-600 mt-4">
-                  Already have an account?{' '}
-                  <Link to="/sign-in" className="font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                  Already have an account?{" "}
+                  <Link
+                    to="/sign-in"
+                    className="font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                  >
                     Sign in
                   </Link>
                 </p>
@@ -242,26 +261,26 @@ export function Signup() {
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-blue-600 opacity-20 mix-blend-multiply" />
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-blue-900/50" />
-            
+
             {/* Enhanced decorative elements */}
             <motion.div
-              animate={{ 
+              animate={{
                 rotate: [0, 360],
-                scale: [1, 1.2, 1]
+                scale: [1, 1.2, 1],
               }}
               transition={{ duration: 20, repeat: Infinity }}
               className="absolute top-0 right-0 -mt-12 -mr-12 w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20 blur-md"
             />
             <motion.div
-              animate={{ 
+              animate={{
                 rotate: [360, 0],
-                scale: [1, 1.3, 1]
+                scale: [1, 1.3, 1],
               }}
               transition={{ duration: 25, repeat: Infinity }}
               className="absolute bottom-0 left-0 -mb-12 -ml-12 w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-20 blur-md"
             />
           </div>
-          
+
           <div className="relative w-full h-full flex items-center justify-center p-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -269,9 +288,10 @@ export function Signup() {
               transition={{ delay: 0.2 }}
               className="text-center text-white"
             >
-              <h1 className="text-4xl font-bold mb-6">Welcome to TradingAI</h1>
+              <h1 className="text-4xl font-bold mb-6">Welcome to TradeWave</h1>
               <p className="text-lg opacity-90 max-w-md mx-auto leading-relaxed">
-                Join our community of traders and start optimizing your trading strategies with AI
+                Join our community of traders and start optimizing your trading
+                strategies
               </p>
               <motion.div
                 initial={{ scale: 0 }}
@@ -285,4 +305,4 @@ export function Signup() {
       </motion.div>
     </div>
   );
-} 
+}

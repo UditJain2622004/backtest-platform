@@ -162,13 +162,19 @@ export function Home() {
                     Start Building
                     <ArrowRight className="w-5 h-5" />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 border-2 border-gray-200 text-gray-700 rounded-xl font-medium hover:border-gray-300 transition-colors"
+                  <a
+                    href="https://youtu.be/sSSDNEmsVww"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Watch Demo
-                  </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-8 py-4 border-2 border-gray-200 text-gray-700 rounded-xl font-medium hover:border-gray-300 transition-colors"
+                    >
+                      Watch Demo
+                    </motion.button>
+                  </a>
                 </motion.div>
               </motion.div>
 
@@ -204,19 +210,19 @@ export function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Tutorials & Guides
+                Beginner to Algorithmic Trading and BackTesting?
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Learn how to create and optimize your trading strategies
+                We've got you covered with our beginner-friendly guides ⬇️⬇️
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <TutorialCard
                 icon={<BookOpen className="w-6 h-6 text-blue-600" />}
-                title="What's Algorithmic Trading and backtesting?"
+                title="What's Algorithmic Trading and Backtesting?"
                 description="A beginner's guide to Algorithmic Trading and Backtesting."
                 link="Read More →"
-                linkTo="/form"
+                linkTo="/beginner-guide"
               />
               <TutorialCard
                 icon={<ChartBar className="w-6 h-6 text-blue-600" />}

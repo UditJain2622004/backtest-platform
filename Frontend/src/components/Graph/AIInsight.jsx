@@ -49,7 +49,7 @@ export function AIInsight({ insights, data }) {
 
     let res;
     try {
-      res = await axios.post("https://backtest-platform.onrender.com/chat", {
+      res = await axios.post("https://tradewave-mzyn.onrender.com/chat", {
         backtest_results: {
           insights,
           data,

@@ -49,7 +49,7 @@ export function Graph() {
     try {
       // Replace this with your API endpoint for the GET request
       const response = await fetch(
-        `https://backtest-platform.onrender.com/report/${report_id}?format=pdf`,
+        `https://tradewave-mzyn.onrender.com/report/${report_id}?format=pdf`,
         {
           method: "GET",
           headers: {
