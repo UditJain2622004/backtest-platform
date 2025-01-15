@@ -109,7 +109,13 @@ def chat_completion(message, backtest_results):
         # print(message[:5].lower())
         useOpenAI = False
         if message[:5].lower() == "mohit":
-            chat_model = ChatOpenAI(model=model_name)
+            print("Using OpenAI model")
+            # chat_model = ChatOpenAI(model=model_name)
+            chat_model = ChatGroq(
+                groq_api_key=os.getenv('GROQ_API_KEY'),
+                model_name="llama-3.1-70b-versatile",
+                max_tokens=4096
+            )
             message = message[5:]
             useOpenAI = True
         else:
@@ -145,7 +151,7 @@ def chat_completion(message, backtest_results):
         res = response.content if response else "No response generated"
         chat_store.save_message("assistant", res)
 
-        return "Answering with ChatGPT :\n"+res if useOpenAI else res
+        return "Not Anymore 😏😏:\n"+res if useOpenAI else res
 
     except Exception as error:
         print("Error in chat completion:", error)
