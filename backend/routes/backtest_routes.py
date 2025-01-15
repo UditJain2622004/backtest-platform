@@ -27,7 +27,7 @@ def init_routes(db):
         try:
             Coin.reset()
             config = request.get_json()
-            print(config)
+            # print(config)
             # print(config)
             # print("Hellooooo")
             coins = [config["ticker"]]
@@ -44,7 +44,7 @@ def init_routes(db):
 
             interval = config['interval']
             coin_objects = []
-            print("Hellooooo")
+            # print("Hellooooo")
 
             for coin in coins:
                 df = None
@@ -53,26 +53,29 @@ def init_routes(db):
                 #     df = pd.read_csv(f'../data/{PAIR}.csv')
                 #     # df = calculate_technical_indicators(df)
                 # else:
-                print("hey")
+                print("Calling fetch data function")
                 prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
-                print("print")
+                print("Returned from fetch data function")
+                print("Calling Transform data function")
+                # print("print")
                 df = transform_data(prices, PAIR)
-                print("hello")
+                print("Returned from transform data function")
+                # print("hello")
                     #save to file
                 # df.to_csv(f'../data/{PAIR}.csv', index=False)
 
                 
                 coin_objects.append(Coin(coin, PAIR, df))
 
-            print("Hellooooo")
+            print("Calling add_technical_indicators function")
             df = add_technical_indicators(df, config['custom_indicators'])
-            # print("Hellooooo")
+            print("Returned from add_technical_indicators function")
 
             
             # Run backtest
             strategy = Strategy(config)  # Your strategy initialization
             
-            print("Worldssss")
+            print("Starting backtest...")
             # Run the backtest
             for t in range(len(coin_objects[0].df)):
                 print(t)
@@ -83,7 +86,7 @@ def init_routes(db):
                         backtest_strategy(coin, current_data, strategy)
 
             # reset all the metrics
-            print("Worldssss")
+            # print("Worldssss")
             # Generate report
             if len(Coin.all_trades) > 0:
                 # print("Helloooooooo")

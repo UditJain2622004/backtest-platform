@@ -106,6 +106,7 @@ export function Form() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState(false);
 
   const [formData, setFormData] = useState({
     strategy: { name: "", description: "" },
@@ -350,7 +351,10 @@ export function Form() {
         });
       }
     } else {
-      console.log("Form has errors");
+      setFormError(true);
+      setTimeout(() => {
+        setFormError(false);
+      }, 5000);
     }
   };
 
@@ -586,11 +590,21 @@ export function Form() {
           >
             {loading ? <Loader /> : "Backtest Strategy"}
           </motion.button>
-          <p className="text-sm text-gray-600">
-            {loading
-              ? "As we are using a free hosting service, sometimes backtesting may take some time. Please be patient. We promise it's worth the wait!"
-              : ""}
-          </p>
+
+          {loading ? (
+            <p className="text-sm text-gray-600">
+              As we are using a free hosting service, sometimes backtesting may
+              take some time. Please be patient. We promise it&apos;s worth the
+              wait!
+            </p>
+          ) : formError ? (
+            <p className="text-sm text-red-600">
+              An error occurred. Please check that you&apos;ve filled all the
+              fields correctyly.
+            </p>
+          ) : (
+            ""
+          )}
 
           {/* <div className="flex gap-4">
             <motion.button

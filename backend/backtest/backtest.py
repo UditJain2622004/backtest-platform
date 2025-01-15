@@ -19,11 +19,12 @@ def execute_trade(entry_price, exit_price,entry_time,exit_time):
 def backtest_strategy(coin_object, current_data, strategy, verbose=False):
     current_price = current_data['close']
     close_time = current_data['close time']
-    print("ffffffe")
+    # print("ffffffe")
     # Check exit conditions if in position
     if coin_object.position and coin_object.curr_coin == coin_object.name:
         # print("ffffffe")
         if strategy.check_exit(current_data, coin_object.entry_price):
+            print("Exiting trade...")
             trade_result = execute_trade(
                 entry_price=coin_object.entry_price,
                 exit_price=current_price,
@@ -38,9 +39,9 @@ def backtest_strategy(coin_object, current_data, strategy, verbose=False):
             
     # Check entry conditions if not in position
     if not coin_object.position:
-        print("fsddcds")
+        # print("fsddcds")
         if strategy.check_entry(current_data):
-            print("fsddcds")
+            print("Entering trade...")
             strategy.risk_manager.initialize_trade(current_price)
             coin_object.enter_trade(current_price,close_time)
             # print("fss")

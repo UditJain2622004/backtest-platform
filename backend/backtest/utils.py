@@ -83,7 +83,7 @@ def fetch_price_history_by_limit(symbol, BASE_URL, interval="1m", limit=180):
 
 def fetch_price_history_by_interval(symbol, interval, start_time, end_time=None):
     """Fetch large historical data using pagination."""
-    url = "https://data.binance.com/api/v3/klines"
+    url = "https://api.binance.com/api/v3/klines"
     all_klines = []
 
     while True:
@@ -98,14 +98,14 @@ def fetch_price_history_by_interval(symbol, interval, start_time, end_time=None)
         print("Fetching data...")
         response = requests.get(url, params=params)
         print("Fetched data...")
-        print(response)
-        print(f"Status Code: {response.status_code}")
-        print(f"Headers: {response.headers}")
-        print(f"Content: {response.text[:500]}")  # Print the first 500 characters of the content
+        # print(response)
+        # print(f"Status Code: {response.status_code}")
+        # print(f"Headers: {response.headers}")
+        # print(f"Content: {response.text[:500]}")  # Print the first 500 characters of the content
 
         response.raise_for_status()
         data = response.json()
-        print(data)
+        # print(data)
         
         if not data:
             break  
