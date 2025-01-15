@@ -106,7 +106,7 @@ def chat_completion(message, backtest_results):
         if len(chat_store.get_all_messages()) == 0:
             chat_store.save_message("system", system_prompt)
 
-        print(message[:5].lower())
+        # print(message[:5].lower())
         useOpenAI = False
         if message[:5].lower() == "mohit":
             chat_model = ChatOpenAI(model=model_name)
@@ -119,7 +119,7 @@ def chat_completion(message, backtest_results):
                 max_tokens=4096
             )
 
-        print(message)
+        # print(message)
 
         chat_store.save_message("user", message)
         messages = [SystemMessage(content=system_prompt)]
@@ -131,7 +131,7 @@ def chat_completion(message, backtest_results):
                
 
         
-        print(messages)
+        # print(messages)
 
 
         # Initialize the LangChain model
@@ -163,4 +163,4 @@ if __name__ == "__main__":
     
     user_message = "What do you think about these results?"
     response = chat_completion(user_message, backtest_results_example)
-    print(response)
+    # print(response)

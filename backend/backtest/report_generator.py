@@ -202,8 +202,8 @@ class ReportGenerator:
             return {}
             
         df = pd.DataFrame(trade_details)
-        print("eeeeeeeeeeeee")
-        print("eeeeeeeeeeeee")
+        # print("eeeeeeeeeeeee")
+        print("Calculating pattern metrics")
         return {
             "profit_distribution": {
                 "large_wins": len(df[df['profit_size'] == 'large_win']),

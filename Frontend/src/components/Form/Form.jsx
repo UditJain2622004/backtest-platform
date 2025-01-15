@@ -349,6 +349,11 @@ export function Form() {
             report_id: response.data.report_id,
           },
         });
+      } else {
+        setFormError(true);
+        setTimeout(() => {
+          setFormError(false);
+        }, 5000);
       }
     } else {
       setFormError(true);

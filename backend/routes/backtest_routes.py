@@ -25,109 +25,118 @@ def init_routes(db):
     # @token_required
     def run_backtest():
         try:
-            Coin.reset()
-            config = request.get_json()
-            # print(config)
-            # print(config)
-            # print("Hellooooo")
+            try:
+                Coin.reset()
+            except Exception as e:
+                print(f"Error in Coin.reset(): {str(e)}")
+                return jsonify({"status": "error", "message": f"Error in Coin.reset(): {str(e)}"}), 500
+
+            try:
+                config = request.get_json()
+                # print(config)
+                # print("Hellooooo")
+            except Exception as e:
+                print(f"Error in parsing request JSON: {str(e)}")
+                return jsonify({"status": "error", "message": f"Error in parsing request JSON: {str(e)}"}), 400
+
             coins = [config["ticker"]]
-            # print("Hellooooo")
 
-            start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
-            # print("Hellooooo")
-            end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")
-            # print("Hellooooo")
+            try:
+                start_date_object = datetime.strptime(config['start_date'], "%Y-%m-%d")
+                end_date_object = datetime.strptime(config['end_date'], "%Y-%m-%d")
+            except Exception as e:
+                print(f"Invalid date format: {str(e)}")
+                return jsonify({"status": "error", "message": f"Invalid date format: {str(e)}"}), 400
 
-            start_time = int(start_date_object.timestamp())*1000
-            end_time = int(end_date_object.timestamp())*1000
-            # print("Hellooooo")
+            start_time = int(start_date_object.timestamp()) * 1000
+            end_time = int(end_date_object.timestamp()) * 1000
 
             interval = config['interval']
             coin_objects = []
-            # print("Hellooooo")
 
             for coin in coins:
-                df = None
-                PAIR = coin.upper()
-                # if os.path.exists(f'../data/{PAIR}.csv'):
-                #     df = pd.read_csv(f'../data/{PAIR}.csv')
-                #     # df = calculate_technical_indicators(df)
-                # else:
-                print("Calling fetch data function")
-                prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
-                print("Returned from fetch data function")
-                print("Calling Transform data function")
-                # print("print")
-                df = transform_data(prices, PAIR)
-                print("Returned from transform data function")
-                # print("hello")
-                    #save to file
-                # df.to_csv(f'../data/{PAIR}.csv', index=False)
+                try:
+                    df = None
+                    PAIR = coin.upper()
+                    # if os.path.exists(f'../data/{PAIR}.csv'):
+                    #     df = pd.read_csv(f'../data/{PAIR}.csv')
+                    #     # df = calculate_technical_indicators(df)
+                    # else:
+                    print("Calling fetch data function")
+                    prices = fetch_price_history_by_interval(PAIR, interval, start_time, end_time)
+                    print("Returned from fetch data function")
+                    print("Calling Transform data function")
+                    df = transform_data(prices, PAIR)
+                    print("Returned from transform data function")
+                    # save to file
+                    # df.to_csv(f'../data/{PAIR}.csv', index=False)
+                    coin_objects.append(Coin(coin, PAIR, df))
+                except Exception as e:
+                    print(f"Error handling coin {coin}: {str(e)}")
+                    return jsonify({"status": "error", "message": f"Error handling coin {coin}: {str(e)}"}), 500
 
-                
-                coin_objects.append(Coin(coin, PAIR, df))
+            try:
+                print("Calling add_technical_indicators function")
+                df = add_technical_indicators(df, config['custom_indicators'])
+                print("Returned from add_technical_indicators function")
+            except Exception as e:
+                print(f"Error adding technical indicators: {str(e)}")
+                return jsonify({"status": "error", "message": f"Error adding technical indicators: {str(e)}"}), 500
 
-            print("Calling add_technical_indicators function")
-            df = add_technical_indicators(df, config['custom_indicators'])
-            print("Returned from add_technical_indicators function")
-
-            
             # Run backtest
-            strategy = Strategy(config)  # Your strategy initialization
-            
-            print("Starting backtest...")
-            # Run the backtest
-            for t in range(len(coin_objects[0].df)):
-                print(t)
-                for coin in coin_objects:
-                    # print(coin.df.iloc[t]["candle_return"])
-                    current_data = coin.df.iloc[t]
-                    if len(current_data) > 0:
-                        backtest_strategy(coin, current_data, strategy)
+            strategy = Strategy(config)
 
-            # reset all the metrics
-            # print("Worldssss")
+            try:
+                print("Starting backtest...")
+                # Run the backtest
+                for t in range(len(coin_objects[0].df)):
+                    # print(t)
+                    for coin in coin_objects:
+                        current_data = coin.df.iloc[t]
+                        if len(current_data) > 0:
+                            backtest_strategy(coin, current_data, strategy)
+            except Exception as e:
+                print(f"Error during backtest loop: {str(e)}")
+                return jsonify({"status": "error", "message": f"Error during backtest loop: {str(e)}"}), 500
+
             # Generate report
             if len(Coin.all_trades) > 0:
-                # print("Helloooooooo")
-                report_generator = ReportGenerator(Coin.all_trades, initial_balance=1)
-                report_filename = f"backtest_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-                report_path = f"reports/{report_filename}"
-                # print("Helloooooooo")
-                report = report_generator.generate_full_report()
-                report["symbol"] = config["ticker"]
-                # save report to file
-                with open("test.json", 'w') as f:
-                    json.dump(report, f)
-                insightsAndReportID = generate_insights(report)
-                report_id = insightsAndReportID['report_id']
-                # print("Helloooooooo")
+                try:
+                    # print("Helloooooooo")
+                    report_generator = ReportGenerator(Coin.all_trades, initial_balance=1)
+                    report_filename = f"backtest_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+                    report_path = f"reports/{report_filename}"
+                    # print("Helloooooooo")
+                    report = report_generator.generate_full_report()
+                    report["symbol"] = config["ticker"]
+                    # save report to file
+                    with open("test.json", 'w') as f:
+                        json.dump(report, f)
+                    insightsAndReportID = generate_insights(report)
+                    report_id = insightsAndReportID['report_id']
+                    # print("Helloooooooo")
 
-                # generate random id
-                # report_id = str(uuid.uuid4())
-                # report_generator.save_report("reports",report_id,report,insights)
-                # print("Helloooooooo")
+                    # Store in MongoDB
+                    backtest_id = backtest_model.create_backtest(
+                        user_id="123",
+                        # user_id=current_user['_id'],
+                        input_params=config,
+                        results=report,
+                        report_id=report_id,
+                        insights=insightsAndReportID['insights']
+                    )
 
-                # report_id = save_report(report_path,report_filename)
-
-                # Store in MongoDB
-                backtest_id = backtest_model.create_backtest(
-                    user_id="123",
-                    # user_id=current_user['_id'],
-                    input_params=config,
-                    results=report,
-                    report_id=report_id,
-                    insights=insightsAndReportID['insights']
-                )
-
-                return jsonify({
-                    "status": "success",
-                    "backtest_id": backtest_id,
-                    "report_url": f"/report/{report_id}",
-                    "report_id":report_id,
-                    "data":report,
-                    "insights":insightsAndReportID
-                }), 200
+                    return jsonify({
+                        "status": "success",
+                        "backtest_id": backtest_id,
+                        "report_url": f"/report/{report_id}",
+                        "report_id": report_id,
+                        "data": report,
+                        "insights": insightsAndReportID
+                    }), 200
+                except Exception as e:
+                    print(f"Error generating report or saving to database: {str(e)}")
+                    return jsonify({"status": "error", "message": f"Error generating report or saving to database: {str(e)}"}), 500
             else:
                 return jsonify({
                     "status": "success",
@@ -135,10 +144,12 @@ def init_routes(db):
                 }), 200
 
         except Exception as e:
+            print(f"An unexpected error occured!! {str(e)}")
             return jsonify({
                 "status": "error",
                 "message": str(e)
             }), 500
+
 
     @backtest_routes.route('/backtest/<backtest_id>', methods=['GET'])
     @token_required
