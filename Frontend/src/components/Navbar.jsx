@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,21 +13,21 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Analytics', path: '/graph' },
-    { name: 'Features', path: '/features' },
-    { name: 'Pricing', path: '/pricing' },
+    { name: "Home", path: "/" },
+    { name: "Analytics", path: "/" },
+    { name: "Features", path: "/" },
+    { name: "Pricing", path: "/" },
   ];
 
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,8 +47,8 @@ export function Navbar() {
                   to={link.path}
                   className={`text-sm font-medium transition-colors ${
                     location.pathname === link.path
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? "text-blue-600"
+                      : "text-gray-700 hover:text-blue-600"
                   }`}
                 >
                   {link.name}
@@ -94,8 +94,12 @@ export function Navbar() {
       {/* Mobile Navigation */}
       <motion.div
         initial={false}
-        animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-        className={`md:hidden overflow-hidden bg-white ${isOpen ? 'border-t' : ''}`}
+        animate={
+          isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }
+        }
+        className={`md:hidden overflow-hidden bg-white ${
+          isOpen ? "border-t" : ""
+        }`}
       >
         <div className="px-4 pt-2 pb-3 space-y-1">
           {navLinks.map((link) => (
@@ -104,15 +108,15 @@ export function Navbar() {
               to={link.path}
               className={`block px-3 py-2 rounded-md text-base font-medium ${
                 location.pathname === link.path
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
               }`}
               onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
           ))}
-          
+
           {/* Mobile Auth Buttons */}
           <div className="pt-4 space-y-2">
             <Link
@@ -134,4 +138,4 @@ export function Navbar() {
       </motion.div>
     </nav>
   );
-} 
+}

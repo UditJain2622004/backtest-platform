@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, ArrowRight, Lock, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, ArrowRight, Lock, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function SignIn() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -16,9 +16,9 @@ export function SignIn() {
       opacity: 1,
       transition: {
         duration: 0.5,
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -26,8 +26,8 @@ export function SignIn() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3 }
-    }
+      transition: { duration: 0.3 },
+    },
   };
 
   const handleSubmit = (e) => {
@@ -55,14 +55,22 @@ export function SignIn() {
               >
                 <Lock className="w-8 h-8 text-white" />
               </motion.div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Welcome Back!
+              </h2>
               <p className="text-gray-600">Sign in to continue your journey</p>
             </motion.div>
 
-            <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-6">
+            <motion.form
+              variants={itemVariants}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
               {/* Email Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Mail className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
@@ -71,7 +79,9 @@ export function SignIn() {
                     whileFocus={{ scale: 1.01 }}
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="appearance-none block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg 
                              focus:ring-blue-500 focus:border-blue-500 transition-all duration-300
                              hover:border-blue-400 bg-gray-50 hover:bg-white"
@@ -83,7 +93,9 @@ export function SignIn() {
 
               {/* Password Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Lock className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
@@ -92,7 +104,9 @@ export function SignIn() {
                     whileFocus={{ scale: 1.01 }}
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                     className="appearance-none block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg 
                              focus:ring-blue-500 focus:border-blue-500 transition-all duration-300
                              hover:border-blue-400 bg-gray-50 hover:bg-white"
@@ -116,7 +130,7 @@ export function SignIn() {
               <div className="flex justify-end">
                 <motion.a
                   whileHover={{ scale: 1.05 }}
-                  href="/forgot-password"
+                  href="/sign-in"
                   className="text-sm font-medium text-blue-600 hover:text-blue-500"
                 >
                   Forgot your password?
@@ -126,7 +140,10 @@ export function SignIn() {
               {/* Submit Button */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full flex justify-center items-center py-3 px-4 bg-blue-600 text-white rounded-lg 
                          hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
@@ -142,7 +159,7 @@ export function SignIn() {
           <div className="hidden md:block relative bg-blue-600 p-12">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800" />
             <div className="relative z-10 h-full flex flex-col justify-center text-white">
-              <motion.h3 
+              <motion.h3
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
@@ -156,17 +173,15 @@ export function SignIn() {
                 transition={{ delay: 0.7 }}
                 className="text-blue-100"
               >
-                Sign in to access your account and continue your trading journey with our advanced algorithmic platform.
+                Sign in to access your account and continue your trading journey
+                with our advanced algorithmic platform.
               </motion.p>
             </div>
           </div>
         </motion.div>
 
         {/* Sign Up Link */}
-        <motion.div 
-          variants={itemVariants}
-          className="text-center mt-8"
-        >
+        <motion.div variants={itemVariants} className="text-center mt-8">
           <span className="text-gray-600">Don't have an account? </span>
           <Link to="/sign-up">
             <motion.span
@@ -180,4 +195,4 @@ export function SignIn() {
       </div>
     </div>
   );
-} 
+}

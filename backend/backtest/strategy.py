@@ -154,7 +154,7 @@ class RiskManager:
             
             # Only activate trailing stop if we're in sufficient profit
             if profit_pct >= activation_pct:
-                print("Trailing stop activated")
+                # print("Trailing stop activated")
                 trailing_stop_price = self.highest_price * (1 - callback_pct/100)
                 if current_price <= trailing_stop_price:
                     return True
@@ -164,7 +164,7 @@ class RiskManager:
             callback_pct = int(self.trailing_take_profit['callback']['value'])
             
             if profit_pct >= activation_pct:
-                print("Trailing take profit activated")
+                # print("Trailing take profit activated")
                 #   track how far price has fallen from peak
                 drawdown_from_peak = ((self.highest_price - current_price) / self.highest_price) * 100
                 if drawdown_from_peak >= callback_pct:

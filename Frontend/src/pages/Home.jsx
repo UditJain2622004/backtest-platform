@@ -535,7 +535,7 @@ export function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="text-center mt-12"
             >
-              <Link to="/marketplace">
+              <Link to="/">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
